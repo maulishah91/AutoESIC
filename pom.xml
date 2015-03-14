@@ -25,7 +25,7 @@
       <configuration>
         <archive>
           <manifest>
-            <mainClass>fully.qualified.MainClass</mainClass>
+            <mainClass>com.esic.Main</mainClass>
           </manifest>
         </archive>
         <descriptorRefs>
