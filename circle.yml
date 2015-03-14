@@ -1,5 +1,4 @@
 test:
   post:
      mvn package
-    - mvn package
     
