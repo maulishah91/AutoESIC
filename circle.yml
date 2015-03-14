@@ -1,5 +1,5 @@
 test:
   post:
      - mvn package
-     - mv /target/*.jar $CIRCLE_ARTIFACTS
+     - mv target/AutoESIC-0.0.1-SNAPSHOT.jar $CIRCLE_ARTIFACTS
     
