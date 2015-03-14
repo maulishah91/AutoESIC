@@ -1,4 +1,5 @@
 test:
   post:
      - mvn package
+     - mv /target/*.jar $CIRCLE_ARTIFACTS
     
