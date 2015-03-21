@@ -38,7 +38,10 @@ public @interface ESICExcelColumns {
 		nomineeRelationship,		
 		sendingLocation,
 		oldESICNo,
-		esicDispensaryName
+		esicDispensaryName,
+		autoEsicStatus,
+		autoEsicComments
+		
 	}
 	
 	

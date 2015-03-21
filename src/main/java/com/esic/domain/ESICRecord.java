@@ -5,12 +5,9 @@ import com.esic.domain.annotations.ESICExcelColumns.ColumnNames;
 
 public class ESICRecord {
 
-
-
 	/**
 	 * SR. NO.
 	 */
-
 	@ESICExcelColumns(ColumnNames.srNo)
 	public String srNo;
 
@@ -189,4 +186,15 @@ public class ESICRecord {
 	@ESICExcelColumns(ColumnNames.esicDispensaryName)
 	public String esicDispensaryName;
 
+	/**
+	 * AutoEsicStatus
+	 */
+	@ESICExcelColumns(ColumnNames.autoEsicStatus)
+	public String autoEsicStatus;
+
+	/**
+	 * AutoEsicComments
+	 */
+	@ESICExcelColumns(ColumnNames.autoEsicComments)
+	public String autoEsicComments;
 }
