@@ -88,7 +88,7 @@ public class ExceltoDomainTranslator {
 
 			try {
 				field.set(record, value);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
+			} catch (IllegalAccessException e) {
 				logger.error("issue in mapping column:" + position
 						+ " row number:" + i, e);
 			}
