@@ -1,4 +1,4 @@
-package com.esic.logging;
+package demo.com.esic.logging;
 
 import org.apache.log4j.Logger;
 
