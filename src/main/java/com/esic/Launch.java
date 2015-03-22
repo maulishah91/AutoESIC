@@ -84,12 +84,12 @@ public class Launch {
 	
 	public static boolean switchToNewWindow(){
 			if(base.equals("")){
-				logger.error("Base URL not initialised.");
+				logger.error("Base URL has not been initialised.");
 				return false;
 			}
-			logger.info("base window handle: "+base);
+			logger.debug("base window handle: "+base);
 		    Set <String> set = Launch.driver.getWindowHandles();
-		    logger.info("set of window handles: "+set.toString());
+		    logger.debug("set of window handles: "+set.toString());
 		    set.remove(base);
 		    if(set.size()>=1){
 		    Launch.driver.switchTo().window((String) set.toArray()[0]);

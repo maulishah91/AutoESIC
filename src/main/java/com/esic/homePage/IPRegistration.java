@@ -1,7 +1,5 @@
 package com.esic.homePage;
 
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
