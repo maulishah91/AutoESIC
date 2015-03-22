@@ -4,7 +4,11 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+/**
+ * 
+ * @author Mauli
+ *
+ */
 public class PreLogin {
 	
 	final static Logger logger = Logger
@@ -20,11 +24,11 @@ public class PreLogin {
 	@FindBy(id="aSkipSecurityPage")
 	WebElement skipCertificateInstallLink;
 	
-	//only if connection is untrusted page pops up
+	//only if 'connection is untrusted' page pops up
 	@FindBy(id="errorTitleText")
 	WebElement errorTitleText;
 	
-	//adding exception if connection is untrusted page pops up  
+	//adding exception if 'connection is untrusted' page pops up  
 	@FindBy(id="exceptionDialogButton")
 	WebElement addException;
 	
@@ -37,12 +41,12 @@ public class PreLogin {
 	    homePageElement.click();
 	    //check if certificates have been installed. check later if this step is required
 	    //launch the main login page
-	    validateDirectToLoginPageLink();
 	    skipCertificateInstall.click();
 	    //check if connection untrusted page appears:
 	    //link: https://www.esic.in/ESICInsurance1/ESICInsurancePortal/Portal_Login.aspx
 	    checkForUntrustedConnectionError();
 	    logger.info("Launching Login page.");
+	    validateLoginPageLink();
 	    return PageFactory.initElements(Launch.driver,Login.class);
 		}
 		catch(Exception e){
@@ -52,7 +56,7 @@ public class PreLogin {
 		}
 }
 	
-	public void checkForUntrustedConnectionError(){
+	private void checkForUntrustedConnectionError(){
 		//this step is crucial because the URL displayed on the browser changes
 		//but instead of loading the login page it shows this error page
 		try{
@@ -67,19 +71,18 @@ public class PreLogin {
 		}
 	}
 	
-	public void validateHomePageLink(){
-		String link = homePageElement.getAttribute("href");	
-		logger.info(link);
-		//validate here
+	private void validateHomePageLink(){
+		String homepage=Launch.driver.getCurrentUrl();
+		if(homepage.equals("http://www.esic.in/ESICInsurance1/ESICInsurancePortal/PortalLogin.aspx")){
+			logger.info("Success Scenario: ESIC site is loaded");
+		}
 	}
 	
-	public void validateDirectToLoginPageLink(){
-		String link = skipCertificateInstallLink.getAttribute("href");	
-		logger.info(link);
-		//validate here
-	}
-	
-	public void validateLoginPageLink(){		
-		//https://www.esic.in/ESICInsurance1/ESICInsurancePortal/Portal_Login.aspx
+	private void validateLoginPageLink(){	
+		String loginLink="https://www.esic.in/ESICInsurance1/ESICInsurancePortal/Portal_Login.aspx";
+		if(Launch.driver.getCurrentUrl().contains(loginLink)){
+			logger.info("Success Scenario: Login page link is verified");
+		}
+		
 	}
 }

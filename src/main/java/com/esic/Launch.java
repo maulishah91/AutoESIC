@@ -5,6 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.homePage.UserHomePage;
+/**
+ * 
+ * @author Mauli
+ *
+ */
 public class Launch {
 
 	static WebDriver driver;
@@ -21,10 +27,16 @@ public class Launch {
 			throw new Exception("Loading of login page has failed. Exiting out of the application");
 		}
 		//to do: get username and password from excel sheet
-		login.login("", "");	
+		UserHomePage homePage= login.login("35000012800001099", "12345march");
+		if(homePage==null){
+			throw new Exception("Loading of home page has failed. Exiting out of the application");
+		}
+		homePage.closePopupForSession();
+		homePage.logout();
 		closeDriver();
 		}
 		catch(Exception e){
+		e.printStackTrace();
 		logger.error("An error has occured. Exiting the application.");
 		closeDriver();
 		}
