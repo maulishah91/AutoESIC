@@ -55,10 +55,11 @@ public class PreLogin {
 			return null;
 		}
 }
-	
+	/**
+	 * this step is crucial because the URL displayed on the browser changes
+		but instead of loading the login page it shows this error page
+	 */
 	private void checkForUntrustedConnectionError(){
-		//this step is crucial because the URL displayed on the browser changes
-		//but instead of loading the login page it shows this error page
 		try{
 		if(errorTitleText!=null && errorTitleText.equals("This Connection is Untrusted")){
 			logger.error("Connection is untrusted. Accept the risks");

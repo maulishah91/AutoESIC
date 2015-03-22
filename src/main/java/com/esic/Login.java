@@ -53,7 +53,7 @@ public class Login {
 		}
 		catch(Exception e){
 			logger.error("Login Failed");
-			if(authFailMessage!=null){
+			if(authFailMessage!=null && authFailMessage.getText().contains("Authentication failure.")){
 				logger.error("Invalid username/password");
 			}
 			return null;
@@ -63,7 +63,7 @@ public class Login {
 	//validate the page
 	private void validateLoginPage(){
 		if(loginTitle.equals("User Login")){
-			logger.info("Login page is launched successfully");
+			logger.info("Success Scenario: Login page is launched successfully");
 		}
 		else{
 			//error and exit
