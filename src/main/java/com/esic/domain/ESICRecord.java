@@ -1,5 +1,7 @@
 package com.esic.domain;
 
+import org.apache.poi.ss.usermodel.Row;
+
 import com.esic.domain.annotations.ESICExcelColumns;
 import com.esic.domain.annotations.ESICExcelColumns.ColumnNames;
 
@@ -197,4 +199,22 @@ public class ESICRecord {
 	 */
 	@ESICExcelColumns(ColumnNames.autoEsicComments)
 	public String autoEsicComments;
+	
+	
+	/**
+	 * BAckreference object...( for updation purpose)
+	 */
+	private Row excelRow;
+
+
+
+	public Row getExcelRow() {
+		return excelRow;
+	}
+
+
+
+	public void setExcelRow(Row excelRow) {
+		this.excelRow = excelRow;
+	}
 }

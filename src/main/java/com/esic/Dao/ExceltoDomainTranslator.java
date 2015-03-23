@@ -14,27 +14,62 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import com.esic.domain.ESICRecord;
 import com.esic.domain.annotations.ESICExcelColumns;
 
+/**
+ * this class will get all fields from {@link ESICRecord} class... and maintain
+ * list of columns which are annotated wih {@link ESICExcelColumns}
+ * annotation...
+ * 
+ * it will get column number based on {@link ESICExcelColumns.ColumnNames} enum postions
+ * 
+ * when given excel sheet .. it will generate records based on
+ * reflection.starting from row 1 in sheet.
+ * 
+ * @author meet
+ *
+ */
 public class ExceltoDomainTranslator {
 
 	final static Logger logger = Logger
 			.getLogger(ExceltoDomainTranslator.class);
 
-	private Field[] fields;
+	private List<Field> excelFields;
 	private Class<ESICRecord> clazz;
-	Map<Field, Integer> fieldMappingMap;
+	Map<Field, Integer> fieldPositionMap;
 
 	public ExceltoDomainTranslator() {
 		clazz = ESICRecord.class;
-		fields = clazz.getDeclaredFields();
-		fieldMappingMap = new HashMap<Field, Integer>();
-		populateFieldMapingMap();
+		Field[] allFields = clazz.getDeclaredFields();
+		populateExcelFields(allFields);
+		fieldPositionMap = new HashMap<Field, Integer>();
+		populateFieldPositionMap();
+
+	}
+
+	// filtering fields which are excel fields only...
+	private void populateExcelFields(Field[] allFilds) {
+
+		excelFields = new ArrayList<Field>();
+
+		for (int i = 0; i < allFilds.length; i++) {
+			Field f = allFilds[i];
+			ESICExcelColumns column = f.getAnnotation(ESICExcelColumns.class);
+
+			if (column == null) {
+
+				logger.debug("not adding " + f + " to excelFields");
+			} else {
+				logger.debug("adding " + f + " to excelFields");
+				excelFields.add(f);
+			}
+
+		}
 
 	}
 
 	// maps excel column number to fields in object...
-	private void populateFieldMapingMap() {
-		for (int i = 0; i < fields.length; i++) {
-			Field f = fields[i];
+	private void populateFieldPositionMap() {
+		for (int i = 0; i < excelFields.size(); i++) {
+			Field f = excelFields.get(i);
 			ESICExcelColumns column = f.getAnnotation(ESICExcelColumns.class);
 
 			if (column == null) {
@@ -42,7 +77,7 @@ public class ExceltoDomainTranslator {
 						+ f);
 			}
 			int position = column.value().ordinal();
-			fieldMappingMap.put(f, position);
+			fieldPositionMap.put(f, position);
 		}
 	}
 
@@ -77,13 +112,15 @@ public class ExceltoDomainTranslator {
 
 	private ESICRecord getRecordFromRow(Row row) {
 		ESICRecord record = new ESICRecord();
+		// storing for back reference...
+		record.setExcelRow(row);
 
-		//for all fields...
-		for (int i = 0; i < fields.length; i++) {
-			Field field = fields[i];
+		// for all fields...
+		for (int i = 0; i < excelFields.size(); i++) {
+			Field field = excelFields.get(i);
 
-			//get position of column in excel..
-			int position = fieldMappingMap.get(field);
+			// get position of column in excel..
+			int position = fieldPositionMap.get(field);
 			String value = row.getCell(position).getStringCellValue();
 
 			try {
