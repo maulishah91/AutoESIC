@@ -14,20 +14,26 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class XLSXFileReader {
 
 	public static void main(String args[]) throws IOException {
+		XLSXFileReader  reader = new XLSXFileReader();
+		
 
 		// C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx
 
 		String fileName = "C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx";
 		String sheetName = "final";
 		
-		
-		XLSXFileReader  reader = new XLSXFileReader();
-		
 		XSSFSheet mySheet = reader.readSheetInExcel(fileName, sheetName);
 
+		reader.printExcelFile(mySheet);
+	}
+
+
+	public  void printExcelFile(XSSFSheet mySheet) {
 		// Get iterator to all the rows in current sheet
 		Iterator<Row> rowIterator = mySheet.iterator();
 
+		System.out.println("Printing File sheet" + mySheet.getSheetName());
+		
 		// Traversing over each row of XLSX file
 		while (rowIterator.hasNext()) {
 			Row row = rowIterator.next();
@@ -72,10 +78,17 @@ public class XLSXFileReader {
 		FileInputStream fis = new FileInputStream(myFile);
 
 		// Finds the workbook instance for XLSX file
+		@SuppressWarnings("resource")
 		XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
 
 		// Return first sheet from the XLSX workbook
 		XSSFSheet mySheet = myWorkBook.getSheet(sheetName);
 		return mySheet;
 	}
+	
+	public  XSSFSheet readSheetInExcel(String fileName) throws FileNotFoundException, IOException
+	{
+		return this.readSheetInExcel(fileName, "final"); 
+	}
+	
 }

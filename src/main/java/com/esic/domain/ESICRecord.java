@@ -7,6 +7,33 @@ import com.esic.domain.annotations.ESICExcelColumns.ColumnNames;
 
 public class ESICRecord {
 
+	@Override
+	public String toString() {
+		return "ESICRecord [srNo=" + srNo + ", esicUserName=" + esicUserName
+				+ ", esicPassword=" + esicPassword + ", empCode=" + empCode
+				+ ", insuranceNo=" + insuranceNo + ", employeeName="
+				+ employeeName + ", gender=" + gender + ", dateOfBirth="
+				+ dateOfBirth + ", fatherName=" + fatherName
+				+ ", fatherDateOfBirth=" + fatherDateOfBirth + ", montherName="
+				+ montherName + ", motherDateOfBirth=" + motherDateOfBirth
+				+ ", matitalStatus=" + matitalStatus + ", spouseName="
+				+ spouseName + ", spouseDateOfBirth=" + spouseDateOfBirth
+				+ ", sonName=" + sonName + ", sonDateOfBirth=" + sonDateOfBirth
+				+ ", daughterName=" + daughterName + ", daughterDateOfBirth="
+				+ daughterDateOfBirth + ", localAddress=" + localAddress
+				+ ", localPinCode=" + localPinCode + ", permanentAddress="
+				+ permanentAddress + ", permanentPinCode=" + permanentPinCode
+				+ ", contactNo=" + contactNo + ", dateOfAppointment="
+				+ dateOfAppointment + ", nomineeName=" + nomineeName
+				+ ", nomineeRelationship=" + nomineeRelationship
+				+ ", sendingLocation=" + sendingLocation + ", oldESICNo="
+				+ oldESICNo + ", esicDispensaryName=" + esicDispensaryName
+				+ ", autoEsicStatus=" + autoEsicStatus + ", autoEsicComments="
+				+ autoEsicComments +  "]";
+	}
+
+
+
 	/**
 	 * SR. NO.
 	 */
