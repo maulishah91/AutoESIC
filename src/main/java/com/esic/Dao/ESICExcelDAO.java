@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
@@ -27,16 +28,16 @@ import com.esic.domain.annotations.ESICExcelColumns;
  * @author meet
  *
  */
-public class ExceltoDomainTranslator {
+public class ESICExcelDAO {
 
 	final static Logger logger = Logger
-			.getLogger(ExceltoDomainTranslator.class);
+			.getLogger(ESICExcelDAO.class);
 
 	private List<Field> excelFields;
 	private Class<ESICRecord> clazz;
 	Map<Field, Integer> fieldPositionMap;
 
-	public ExceltoDomainTranslator() {
+	public ESICExcelDAO() {
 		clazz = ESICRecord.class;
 		Field[] allFields = clazz.getDeclaredFields();
 		populateExcelFields(allFields);
@@ -102,7 +103,7 @@ public class ExceltoDomainTranslator {
 			}
 			// for normal processing or row..
 			else {
-				getRecordFromRow(row);
+				records.add(getRecordFromRow(row));
 			}
 
 		}
@@ -121,6 +122,7 @@ public class ExceltoDomainTranslator {
 
 			// get position of column in excel..
 			int position = fieldPositionMap.get(field);
+			row.getCell(position).setCellType(Cell.CELL_TYPE_STRING);
 			String value = row.getCell(position).getStringCellValue();
 
 			try {
