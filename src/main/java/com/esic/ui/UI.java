@@ -42,7 +42,7 @@ public class UI {
 				try {
 					UIManager.setLookAndFeel(UIManager
 							.getSystemLookAndFeelClassName());
-					UI window = new UI();
+					UI window = ObjectStore.getUI();
 
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -56,11 +56,8 @@ public class UI {
 	 * Create the application.
 	 */
 	public UI() {
-		ObjectStore.ui = this;
 		initialize();
-		
 		registerEvents();
-		
 	}
 
 	
@@ -128,30 +125,10 @@ public class UI {
 	}
 
 	protected void handleProcessFile() {
-
-		XLSXFileReader fileReader = new XLSXFileReader();
-		XSSFSheet sheet;
-		try {
-			sheet = fileReader.readSheetInExcel(textField.getText());
-			logger.info("Opened file " +textField.getText() );
-		} catch (IOException e) {
-			logger.error("Can not open file", e);
-			JOptionPane.showMessageDialog(frame, "Can not open file!");
-			return;
-		}
-
-		fileReader.printExcelFile(sheet);
-		ESICExcelDAO domainTranslator = new ESICExcelDAO();
-		List<ESICRecord> records = domainTranslator.getESICRecords(sheet);
-		printRecords(records);
-
+		ObjectStore.getProcessor().processFile(textField.getText());
 	}
 
-	private void printRecords(List<ESICRecord> records) {
-		for (ESICRecord esicRecord : records) {
-			System.out.println(esicRecord);
-		}
-	}
+	
 
 	protected void handleSelectFileClick() {
 
