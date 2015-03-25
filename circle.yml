@@ -1,5 +1,6 @@
 test:
   post:
      - mv target/AutoESIC-0.0.1-SNAPSHOT.jar $CIRCLE_ARTIFACTS
-     - mv target/AutoESIC-0.0.1-SNAPSHOT-jar-with-dependencies.jar $CIRCLE_ARTIFACTS
+     - mv target/app-gui.exe $CIRCLE_ARTIFACTS
+     - mv target/app-cli.exe $CIRCLE_ARTIFACTS
      - mv src/scripts/RunAutoESIC.bat $CIRCLE_ARTIFACTS    
