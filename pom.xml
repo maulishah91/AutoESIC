@@ -42,29 +42,45 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.esic.Main</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 
+	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-shade-plugin</artifactId>
+		<version>1.4</version>
+		<executions>
+			<execution>
+				<phase>package</phase>
+				<goals>
+					<goal>shade</goal>
+				</goals>
+			</execution>
+		</executions>
+		<configuration>
+			<shadedArtifactAttached>true</shadedArtifactAttached> <!-- Make the shaded artifact not the main one -->
+			<shadedClassifierName>shaded</shadedClassifierName> <!-- set the suffix to the shaded jar -->
+			
+			  <filters>
+                    <filter>
+                        <!--
+                            Exclude files that sign a jar
+                            (one or multiple of the dependencies).
+                            One may not repack a signed jar without
+                            this, or you will get a
+                            SecurityException at program start.
+                        -->
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <exclude>META-INF/*.SF</exclude>
+                            <exclude>META-INF/*.RSA</exclude>
+                            <exclude>META-INF/*.INF</exclude> <!-- This one may not be required -->
+                        </excludes>
+                    </filter>
+                </filters>
+                
+		</configuration>
+	</plugin>
+		
+		
 
 
 			<plugin>
@@ -94,10 +110,82 @@
 
 
 
+<plugin>
+    <groupId>org.bluestemsoftware.open.maven.plugin</groupId>
+    <artifactId>launch4j-plugin</artifactId>
+    <version>1.5.0.0</version>
+    <executions>
+        <!-- GUI exe -->
+        <execution>
+            <id>l4j-gui</id>
+            <phase>package</phase>
+            <goals>
+                <goal>launch4j</goal>
+            </goals>
+            <configuration>
+                <headerType>gui</headerType>
+                <outfile>target/app-gui.exe</outfile>
+                <jar>target/${artifactId}-${version}-shaded.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
+                <errTitle>App Err</errTitle>
+                <classPath>
+                    <mainClass>com.esic.ui.UI</mainClass>
+                   
+                </classPath>
+                <icon>src/main/resources/icons/exeIcon.ico</icon>
+                <jre>
+                    <minVersion>1.5.0</minVersion>
+                    <maxVersion>1.8.0</maxVersion>
+                    <initialHeapSize>128</initialHeapSize>
+                    <maxHeapSize>1024</maxHeapSize>
+                </jre>
+                <versionInfo>
+                    <fileVersion>1.0.0.0</fileVersion>
+                    <txtFileVersion>1.0.0.0</txtFileVersion>
+                    <fileDescription>Desc</fileDescription>
+                    <copyright>C</copyright>
+                    <productVersion>1.0.0.0</productVersion>
+                    <txtProductVersion>1.0.0.0</txtProductVersion>
+                    <productName>Product</productName>
+                    <internalName>Product</internalName>
+                    <originalFilename>App.exe</originalFilename>
+                </versionInfo>
+            </configuration>
+        </execution>
+
+        <!-- Command-line exe -->
+        <execution>
+            <id>l4j-cli</id>
+            <phase>package</phase>
+            <goals>
+                <goal>launch4j</goal>
+            </goals>
+            <configuration>
+                <headerType>console</headerType>
+                <outfile>target/app-cli.exe</outfile>
+                <jar>target/${artifactId}-${version}-shaded.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
+                <errTitle>App Err</errTitle>
+                <classPath>
+                    <mainClass>com.esic.Launch</mainClass>
+                   
+                </classPath>
+                <icon>src/main/resources/icons/exeIcon.ico</icon>
+                <jre>
+                    <minVersion>1.5.0</minVersion>
+                    <maxVersion>1.8.0</maxVersion>
+                    <initialHeapSize>128</initialHeapSize>
+                    <maxHeapSize>1024</maxHeapSize>
+                </jre>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
 
 
 		</plugins>
 	</build>
+
+
 
 
 </project>
