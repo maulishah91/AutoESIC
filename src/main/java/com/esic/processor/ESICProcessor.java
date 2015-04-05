@@ -34,10 +34,8 @@ public class ESICProcessor {
 			recordProcessor.processRecords(records);
 			
 			
-			
 
 		} catch (ESICException e) {
-			// TODO Auto-generated catch block
 			logger.error("Error in Processing file", e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
