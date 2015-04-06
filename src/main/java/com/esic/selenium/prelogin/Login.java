@@ -1,12 +1,14 @@
-package com.esic;
+package com.esic.selenium.prelogin;
 
+
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.esic.homePage.UserHomePage;
+import com.esic.selenium.homePage.UserHomePage;
 /**
  * 
  * @author Mauli
@@ -31,6 +33,13 @@ public class Login {
 	//Authentication failed error message
 	@FindBy(id="lblMessage")
 	WebElement authFailMessage;
+	
+	public UserHomePage process(){
+		//from excel sheet
+        String uName=JOptionPane.showInputDialog("Enter username");
+		String pWord=JOptionPane.showInputDialog("Enter password");
+		return login(uName, pWord);
+	}
 	
 	public UserHomePage login(String username,String password){
 		validateLoginPage();

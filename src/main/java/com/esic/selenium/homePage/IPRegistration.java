@@ -1,11 +1,11 @@
-package com.esic.homePage;
+package com.esic.selenium.homePage;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.esic.Launch;
+import com.esic.selenium.prelogin.Launch;
 
 /**
  * 
@@ -27,6 +27,10 @@ public class IPRegistration {
 	
 	@FindBy(id="ctl00_HomePageContent_btnContinue")
 	WebElement continueButton;
+	
+	public EmployeeRegistrationForm1 process(){
+		return openRegisterNewIP();
+	}
 	
 	public EmployeeRegistrationForm1 openRegisterNewIP() throws RegisterNewIPPageLoadError{
 		//open IP registration page

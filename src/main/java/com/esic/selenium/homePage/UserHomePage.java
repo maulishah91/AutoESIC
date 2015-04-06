@@ -1,10 +1,11 @@
-package com.esic.homePage;
+package com.esic.selenium.homePage;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import com.esic.Launch;
+
+import com.esic.selenium.prelogin.Launch;
 
 /**
  * 
@@ -40,6 +41,11 @@ public class UserHomePage {
 	@FindBy(id="BtnOK")
 	WebElement buttonOK;
 	
+	
+	public IPRegistration process(){
+		Launch.base= Launch.driver.getWindowHandle(); //home page of application is the base URL
+		return closePopupForSession();
+	}
 	public IPRegistration closePopupForSession() throws ClosePopupException{
 		//check for popup
 		validatePopup1(popupText.getText());

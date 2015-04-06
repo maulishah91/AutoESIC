@@ -1,4 +1,4 @@
-package com.esic;
+package com.esic.selenium.prelogin;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -32,6 +32,9 @@ public class PreLogin {
 	@FindBy(id="exceptionDialogButton")
 	WebElement addException;
 	
+	public Login process(){
+		return launchLoginPage();
+	}
 	
 	public Login launchLoginPage() {
 		try{

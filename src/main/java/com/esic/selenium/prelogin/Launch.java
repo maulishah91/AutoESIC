@@ -1,26 +1,25 @@
-package com.esic;
+package com.esic.selenium.prelogin;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
-
-import com.esic.homePage.EmployeeRegistrationForm1;
-import com.esic.homePage.IPRegistration;
-import com.esic.homePage.UserHomePage;
 /**
  * 
  * @author Mauli
+ *user story 4, 19(checkbox one) and 23 onwards are pending
  *
+ *This process will load and close the drivers and call call the InitialisePO to load
+ *and execute the first page object aka PreLogin
+ *It will also handle scenarios related to switching and closing new windows
  */
 public class Launch {
 
 	public static WebDriver driver;
 	public static String base="";
-	final static Logger logger = Logger
-			.getLogger(Launch.class);
+	final static Logger logger = Logger.getLogger(Launch.class);
 	
 	public static void main(String[] args) throws InterruptedException {
 		try{	
@@ -39,34 +38,20 @@ public class Launch {
 		closeDriver();
 		}
 	}
-	
-	private void process()throws Exception{
-		PreLogin preLogin=PageFactory.initElements(driver, PreLogin.class);
-		Login login=preLogin.launchLoginPage();
-		if(login==null){
-			throw new Exception("Loading of login page has failed. Exiting out of the application");
-		}
-		//to do: get username and password from excel sheet
-		UserHomePage homePage= login.login("35000012800001099", "12345march");
-		if(homePage==null){
-			throw new Exception("Loading of home page has failed. Exiting out of the application");
-		}
-		base= Launch.driver.getWindowHandle(); //home page of application is the base URL
-		IPRegistration ipRegister=homePage.closePopupForSession();
-		if(ipRegister==null){
-			throw new Exception("Loading of IP Registration page has failed. Exiting out of the application");
-		}
-		EmployeeRegistrationForm1 form=ipRegister.openRegisterNewIP();
-		if(form==null){
-			throw new Exception("Loading of Employee Registration Form-1 page has failed. Exiting out of the application");
-		}
-		closeCurrentWindowAndSwitchToBaseWindow();
-		homePage.logout();
+	private void process() throws Exception{
+		InitialisePO initPO=new InitialisePO();
+		initPO.initialisePageObject(new PreLogin());
+		/*For now the sequence is : 
+		 * Prelogin--> Login --> UserHomePage --> IPRegistration --> EmployeeRegistrationForm1 --> PersonalDetails --> PresentContactDetails
+			  --> NomineeDetails -->FamilyParticularsForm--> DetailsOfBankAccount -->SubmitFormAndExportErrors-->Logout
+		*/	 
 	}
+	
 	
 	public static void loadDriver(){
 		try{
 		driver = new FirefoxDriver();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		}
 		catch(Exception e){
 			logger.error("Error in creating Firefox Driver");
@@ -87,12 +72,12 @@ public class Launch {
 				logger.error("Base URL has not been initialised.");
 				return false;
 			}
-			logger.debug("base window handle: "+base);
+			logger.info("base window handle: "+base);
 		    Set <String> set = Launch.driver.getWindowHandles();
-		    logger.debug("set of window handles: "+set.toString());
+		    logger.info("set of window handles: "+set.toString());
 		    set.remove(base);
 		    if(set.size()>=1){
-		    Launch.driver.switchTo().window((String) set.toArray()[0]);
+		    Launch.driver.switchTo().window((String) set.toArray()[set.size()-1]);
 		    logger.info("url: "+Launch.driver.getCurrentUrl());
 		    return true;
 		    }
