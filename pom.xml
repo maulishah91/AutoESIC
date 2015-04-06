@@ -125,7 +125,7 @@
                 <goal>launch4j</goal>
             </goals>
             <configuration>
-                <headerType>gui</headerType>
+                <headerType>console</headerType>
                 <outfile>target/app-gui.exe</outfile>
                 <jar>target/${artifactId}-${version}-shaded.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
                 <errTitle>App Err</errTitle>

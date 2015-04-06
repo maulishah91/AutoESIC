@@ -6,7 +6,20 @@ import com.esic.domain.ESICRecord;
 
 public class ESICRecordProcessor {
 
+	/**
+	 * main method to process a single record
+	 * It will update {@link ESICRecord#autoEsicComments} and {@link ESICRecord#autoEsicStatus} columns.
+	 * @param record
+	 */
 	public void processRecord(ESICRecord record) {
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 
