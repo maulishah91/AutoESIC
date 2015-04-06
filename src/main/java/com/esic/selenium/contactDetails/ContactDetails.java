@@ -11,7 +11,7 @@ import com.esic.selenium.prelogin.Launch;
 
 /**
  * 
- * @author Mauli 
+ * @author Mauli  
  *Made this class since these details are repeated twice
  */
 public abstract class ContactDetails {
