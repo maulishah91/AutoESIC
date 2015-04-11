@@ -44,7 +44,7 @@ public class EmployeeRegistrationForm1 {
 		}
 	}
 	
-	//date of birth : mandatory
+	//date of apponitment : mandatory
 	//acc to site it has to be dd/mm/yyyy 
 	public void enterDateOfAppointment(String BirthDate){
 		//perform date validation and fetch dd, mm and yyyy

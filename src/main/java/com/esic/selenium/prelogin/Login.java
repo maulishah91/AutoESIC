@@ -36,9 +36,10 @@ public class Login {
 	
 	public UserHomePage process(){
 		//from excel sheet
-        String uName=JOptionPane.showInputDialog("Enter username");
+		return login("35000012800001099", "12345march");
+        /*String uName=JOptionPane.showInputDialog("Enter username");
 		String pWord=JOptionPane.showInputDialog("Enter password");
-		return login(uName, pWord);
+		return login(uName, pWord);*/
 	}
 	
 	public UserHomePage login(String username,String password){
@@ -56,7 +57,7 @@ public class Login {
 			if(Launch.driver.getCurrentUrl().contains("http://www.esic.in/InsuranceGlobalWebV4/ESICInsurancePortal/PortalHome.aspx")){
 			logger.info("Login success.");	
 			//go to next PageObject
-			return PageFactory.initElements(Launch.driver,UserHomePage.class);
+			return new UserHomePage();
 			}
 			throw new Exception("Login failure");
 		}
