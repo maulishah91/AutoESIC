@@ -165,7 +165,7 @@
             </configuration>
         </execution>
 
-<!--         Command-line exe
+<!--         Command-line exe  --> 
         <execution>
             <id>l4j-cli</id>
             <phase>package</phase>
@@ -189,7 +189,7 @@
                     <maxHeapSize>1024</maxHeapSize>
                 </jre>
             </configuration>
-        </execution> -->
+        </execution> 
     </executions>
 </plugin>
 
