@@ -35,6 +35,16 @@
 			<version>1.2.17</version>
 		</dependency>
 
+<!-- 
+	<dependency>
+			<groupId>test</groupId>
+			<artifactId>test</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>C:\eclipse\workspaces\esic\annotationProcessor\target\annotationProcessor.jar</systemPath>
+		</dependency>
+
+ -->
 
 	</dependencies>
 
@@ -130,7 +140,7 @@
                 <jar>target/${artifactId}-${version}-shaded.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
                 <errTitle>App Err</errTitle>
                 <classPath>
-                    <mainClass>com.esic.ui.UI</mainClass>
+                    <mainClass>com.esic.selenium.prelogin.Launch</mainClass>
                    
                 </classPath>
                 <icon>src/main/resources/icons/exeIcon.ico</icon>
@@ -155,7 +165,7 @@
             </configuration>
         </execution>
 
-        <!-- Command-line exe -->
+<!--         Command-line exe
         <execution>
             <id>l4j-cli</id>
             <phase>package</phase>
@@ -165,7 +175,7 @@
             <configuration>
                 <headerType>console</headerType>
                 <outfile>target/app-cli.exe</outfile>
-                <jar>target/${artifactId}-${version}-shaded.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
+                <jar>target/${artifactId}-${version}-shaded.jar</jar> 'shaded' is the value set on shadedClassifierName above
                 <errTitle>App Err</errTitle>
                 <classPath>
                     <mainClass>com.esic.Launch</mainClass>
@@ -179,7 +189,7 @@
                     <maxHeapSize>1024</maxHeapSize>
                 </jre>
             </configuration>
-        </execution>
+        </execution> -->
     </executions>
 </plugin>
 
