@@ -48,14 +48,14 @@ public class PermanentContactDetails extends ContactDetails{
 	WebElement email;
 	
 
-	void loadAddressValues(){
+	protected void loadAddressValues(){
 		mandatoryAddress=new ArrayList<WebElement>();
 		mandatoryAddress.add(mandatoryAddressLine1);
 		mandatoryAddress.add(mandatoryAddressLine2);
 		mandatoryAddress.add(mandatoryAddressLine3);
 	}
 	
-	void loadDistrict(){
+	protected void loadDistrict(){
 		//dynamically loaded after state is selected and hence has to called after state is selected
 		district=Launch.driver.findElement(By.id("ctl00_HomePageContent_ctrlTextPermanentDistrict"));
 	}

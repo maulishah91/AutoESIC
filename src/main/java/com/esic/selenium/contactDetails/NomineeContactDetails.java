@@ -56,7 +56,8 @@ public class NomineeContactDetails extends ContactDetails{
 		enterMandatoryAddress("abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij");
 		enterDetailForField("email", "abc@abc.in");
 		enterDetailForField("district", "mum");
-		enterDetailForField("state", "kerala");
+		enterDetailForField("state", "Kerala");
+		enterDetailForField("district", "Kollam");
 		enterDetailForField("phone", "12345");
 		saveBtn.click();
 		closeBtn.click();
@@ -97,14 +98,14 @@ public class NomineeContactDetails extends ContactDetails{
 				
 			}
 
-	void loadAddressValues(){
+	protected void loadAddressValues(){
 		mandatoryAddress=new ArrayList<WebElement>();
 		mandatoryAddress.add(mandatoryAddressLine1);
 		mandatoryAddress.add(mandatoryAddressLine2);
 		mandatoryAddress.add(mandatoryAddressLine3);
 	}
 	
-	void loadDistrict(){
+	protected void loadDistrict(){
 		//dynamically loaded after state is selected and hence has to called after state is selected
 		district=Launch.driver.findElement(By.id("ctl00_HomePageContent_Districts"));
 	}

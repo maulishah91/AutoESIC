@@ -52,6 +52,8 @@ public class InitialisePO{
 			logger.error("IllegalArgumentException occured: ",e);
 		} catch (InvocationTargetException e) {
 			logger.error("InvocationTargetException occured: ",e);
+		} catch(Exception e){
+			logger.error("An error occured: ",e);
 		}
 	}
 
