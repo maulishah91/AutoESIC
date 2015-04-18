@@ -11,6 +11,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+
+/**
+ * read file and retrive given sheet...
+ * @author meet
+ *
+ */
 public class XLSXFileReader {
 
 	public static void main(String args[]) throws IOException {
@@ -20,9 +26,9 @@ public class XLSXFileReader {
 		// C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx
 
 		String fileName = "C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx";
-		String sheetName = "final";
+	
 		
-		XSSFSheet mySheet = reader.readSheetInExcel(fileName, sheetName);
+		XSSFSheet mySheet = reader.readSheetInExcel(fileName, 0);
 
 		reader.printExcelFile(mySheet);
 	}
@@ -72,7 +78,7 @@ public class XLSXFileReader {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private  XSSFSheet readSheetInExcel(String fileName, String sheetName)
+	private  XSSFSheet readSheetInExcel(String fileName, int index)
 			throws FileNotFoundException, IOException {
 		File myFile = new File(fileName);
 		FileInputStream fis = new FileInputStream(myFile);
@@ -82,13 +88,13 @@ public class XLSXFileReader {
 		XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
 
 		// Return first sheet from the XLSX workbook
-		XSSFSheet mySheet = myWorkBook.getSheet(sheetName);
+		XSSFSheet mySheet = myWorkBook.getSheetAt(index);
 		return mySheet;
 	}
 	
 	public  XSSFSheet readSheetInExcel(String fileName) throws FileNotFoundException, IOException
 	{
-		return this.readSheetInExcel(fileName, "final"); 
+		return this.readSheetInExcel(fileName, 0); 
 	}
 	
 }

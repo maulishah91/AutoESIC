@@ -1,11 +1,9 @@
 package com.esic.Dao;
 
-import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,13 +12,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import com.esic.domain.ESICRecord;
 import com.esic.domain.annotations.ESICExcelColumns;
+import com.esic.domain.helper.ESICRecordHelper;
 
 /**
- * this class will get all fields from {@link ESICRecord} class... and maintain
- * list of columns which are annotated wih {@link ESICExcelColumns}
- * annotation...
+ * this class will get all fields from {@link ESICRecord} class... 
  * 
- * it will get column number based on {@link ESICExcelColumns.ColumnNames} enum postions
+ * it will get column number based on {@link ESICExcelColumns} enum
+ * postions
  * 
  * when given excel sheet .. it will generate records based on
  * reflection.starting from row 1 in sheet.
@@ -30,65 +28,16 @@ import com.esic.domain.annotations.ESICExcelColumns;
  */
 public class ESICExcelDAO {
 
-	final static Logger logger = Logger
-			.getLogger(ESICExcelDAO.class);
-
-	private List<Field> excelFields;
-	private Class<ESICRecord> clazz;
-	Map<Field, Integer> fieldPositionMap;
-
-	public ESICExcelDAO() {
-		clazz = ESICRecord.class;
-		Field[] allFields = clazz.getDeclaredFields();
-		populateExcelFields(allFields);
-		fieldPositionMap = new HashMap<Field, Integer>();
-		populateFieldPositionMap();
-
-	}
-
-	// filtering fields which are excel fields only...
-	private void populateExcelFields(Field[] allFilds) {
-
-		excelFields = new ArrayList<Field>();
-
-		for (int i = 0; i < allFilds.length; i++) {
-			Field f = allFilds[i];
-			ESICExcelColumns column = f.getAnnotation(ESICExcelColumns.class);
-
-			if (column == null) {
-
-				logger.debug("not adding " + f + " to excelFields");
-			} else {
-				logger.debug("adding " + f + " to excelFields");
-				excelFields.add(f);
-			}
-
-		}
-
-	}
-
-	// maps excel column number to fields in object...
-	private void populateFieldPositionMap() {
-		for (int i = 0; i < excelFields.size(); i++) {
-			Field f = excelFields.get(i);
-			ESICExcelColumns column = f.getAnnotation(ESICExcelColumns.class);
-
-			if (column == null) {
-				logger.error("Can not find ExcelColumn annotations for field."
-						+ f);
-			}
-			int position = column.value().ordinal();
-			fieldPositionMap.put(f, position);
-		}
-	}
+	final static Logger logger = Logger.getLogger(ESICExcelDAO.class);
 
 	/**
 	 * skip first row always...
 	 * 
 	 * @param sheet
 	 * @return
-	 */
-	public List<ESICRecord> getESICRecords(XSSFSheet sheet) {
+	 * @throws ParseException 
+	 */ 
+	public List<ESICRecord> getESICRecords(XSSFSheet sheet) throws ParseException {
 		List<ESICRecord> records = new ArrayList<ESICRecord>();
 
 		// Get iterator to all the rows in current sheet
@@ -111,27 +60,30 @@ public class ESICExcelDAO {
 		return records;
 	}
 
-	private ESICRecord getRecordFromRow(Row row) {
+	/**
+	 * generate single record from excel row.
+	 * 
+	 * @param row
+	 * @return
+	 * @throws ParseException 
+	 */
+	private ESICRecord getRecordFromRow(Row row) throws ParseException {
 		ESICRecord record = new ESICRecord();
+
 		// storing for back reference...
 		record.setExcelRow(row);
 
-		// for all fields...
-		for (int i = 0; i < excelFields.size(); i++) {
-			Field field = excelFields.get(i);
-
-			// get position of column in excel..
-			int position = fieldPositionMap.get(field);
+		for (ESICExcelColumns column : ESICExcelColumns.values()) {
+			int position = column.ordinal();
 			row.getCell(position).setCellType(Cell.CELL_TYPE_STRING);
 			String value = row.getCell(position).getStringCellValue();
-
-			try {
-				field.set(record, value);
-			} catch (IllegalAccessException e) {
-				logger.error("issue in mapping column:" + position
-						+ " row number:" + i, e);
-			}
+			record.put(column.name(), value);
+			
+			
 		}
+		
+		ESICRecordHelper.populateDependentList(record);
+		
 
 		return record;
 	}
