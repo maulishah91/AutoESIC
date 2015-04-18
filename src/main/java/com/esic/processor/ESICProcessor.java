@@ -1,6 +1,7 @@
 package com.esic.processor;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -27,7 +28,7 @@ public class ESICProcessor {
 		List<ESICRecord> records;
 		try {
 			records = getEsicRecords(fileName);
-			printRecords(records);
+		//	printRecords(records);
 
 			ESICRecordProcessor recordProcessor = ObjectStore
 					.getRecordProcessor();
@@ -35,7 +36,7 @@ public class ESICProcessor {
 			
 			
 
-		} catch (ESICException e) {
+		} catch (Exception e) {
 			logger.error("Error in Processing file", e);
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
@@ -43,7 +44,8 @@ public class ESICProcessor {
 	}
 
 	private List<ESICRecord> getEsicRecords(String fileName)
-			throws ESICException {
+			throws ESICException, ParseException {
+		
 		XLSXFileReader fileReader = new XLSXFileReader();
 		XSSFSheet sheet;
 		try {
