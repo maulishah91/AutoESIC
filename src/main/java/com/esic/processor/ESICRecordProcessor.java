@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
 
 public class ESICRecordProcessor {
@@ -12,13 +13,16 @@ public class ESICRecordProcessor {
 
 	/**
 	 * main method to process a single record
-	 * It will update {@link ESICRecord#autoEsicComments} and {@link ESICRecord#autoEsicStatus} columns.
+	 * It will not update {@link ESICRecord#autoEsicComments} and {@link ESICRecord#autoEsicStatus} columns.
+	 * As soon as this function ends it will get updated in excel file..
 	 * @param record
 	 */
 	public void processRecord(ESICRecord record) {
 		
 		
 		logger.debug(record);
+		
+		record.setAutoEsicStatus("PASSTEST");
 		
 
 	}
@@ -28,6 +32,9 @@ public class ESICRecordProcessor {
 		for (ESICRecord esicRecord : records) {
 
 			processRecord(esicRecord);
+			
+			ObjectStore.getExcelDAO().updateRecord(esicRecord);
+			
 		}
 
 	}

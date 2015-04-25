@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+
+import com.esic.domain.annotations.ESICExcelColumns;
 
 
 public class ESICRecord extends HashMap<String, String> {
@@ -357,11 +360,29 @@ public class ESICRecord extends HashMap<String, String> {
 	
 	
 	
-	
-	
-	
-	
-	
+	public void setAutoEsicStatus(String value) {
+		 this.put(ESICExcelColumns.autoEsicStatus.toString(), value);
+		Cell cell = this.excelRow.getCell(ESICExcelColumns.autoEsicStatus.ordinal());
+		
+		if(cell == null){
+			 cell = this.excelRow.createCell(ESICExcelColumns.autoEsicStatus.ordinal());
+		}
+		
+		cell.setCellValue(value);
+	}
+
+	public void setAutoEsicComments(String value) {
+		 this.put(ESICExcelColumns.autoEsicComments.toString(), value);
+			Cell cell = this.excelRow.getCell(ESICExcelColumns.autoEsicStatus.ordinal());
+			
+		 
+		if (cell == null) {
+			cell = this.excelRow.createCell(ESICExcelColumns.autoEsicComments.ordinal());
+		}
+			
+			cell.setCellValue(value);
+	}
+
 	
 	
 	

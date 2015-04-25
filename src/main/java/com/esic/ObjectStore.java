@@ -1,11 +1,13 @@
 package com.esic;
 
 import com.esic.Dao.ESICExcelDAO;
+import com.esic.Dao.XLSXFileReader;
 import com.esic.processor.ESICProcessor;
 import com.esic.processor.ESICRecordProcessor;
 import com.esic.ui.UI;
 
 public class ObjectStore {
+
 
 	static UI ui;
 
@@ -14,7 +16,11 @@ public class ObjectStore {
 	static ESICProcessor processor;
 
 	static ESICRecordProcessor recordProcessor;
+	
+	private static String fileName;
 
+	private static final XLSXFileReader fileReader = new XLSXFileReader();
+	
 	public static ESICRecordProcessor getRecordProcessor() {
 
 		if (recordProcessor == null) {
@@ -45,5 +51,18 @@ public class ObjectStore {
 		}
 		return ui;
 	}
+	
+	public static String getFileName() {
+		return fileName;
+	}
+
+	public static void setFileName(String fileName) {
+		ObjectStore.fileName = fileName;
+	}
+
+	public static XLSXFileReader getFilereader() {
+		return fileReader;
+	}
+
 
 }

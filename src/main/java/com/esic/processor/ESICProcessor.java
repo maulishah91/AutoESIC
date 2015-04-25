@@ -24,6 +24,7 @@ public class ESICProcessor {
 
 	final static Logger logger = Logger.getLogger(ESICProcessor.class);
 
+	
 	/**
 	 * Main processor
 	 * 
@@ -31,6 +32,8 @@ public class ESICProcessor {
 	 */
 	public void processFile(String fileName) {
 		List<ESICRecord> records;
+		ObjectStore.setFileName(fileName);
+		
 		try {
 			records = getEsicRecords(fileName);
 		//	printRecords(records);
@@ -51,10 +54,10 @@ public class ESICProcessor {
 	private List<ESICRecord> getEsicRecords(String fileName)
 			throws ESICException, ParseException {
 		
-		XLSXFileReader fileReader = new XLSXFileReader();
+	
 		XSSFSheet sheet;
 		try {
-			sheet = fileReader.readSheetInExcel(fileName);
+			sheet = ObjectStore.getFilereader().readSheetInExcel(fileName);
 			logger.info("Opened file " + fileName);
 		} catch (IOException e) {//THROWS NEW
 			logger.error("Can not open file", e);

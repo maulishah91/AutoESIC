@@ -3,13 +3,18 @@ package com.esic.Dao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.esic.exception.ESICException;
 
 
 /**
@@ -19,6 +24,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class XLSXFileReader {
 
+	final static Logger logger = Logger.getLogger(XLSXFileReader.class);
+
+	
 	public static void main(String args[]) throws IOException {
 		XLSXFileReader  reader = new XLSXFileReader();
 		
@@ -89,12 +97,35 @@ public class XLSXFileReader {
 
 		// Return first sheet from the XLSX workbook
 		XSSFSheet mySheet = myWorkBook.getSheetAt(index);
+		
+		fis.close();
+		
+		
 		return mySheet;
 	}
 	
 	public  XSSFSheet readSheetInExcel(String fileName) throws FileNotFoundException, IOException
 	{
 		return this.readSheetInExcel(fileName, 0); 
+	}
+	
+	
+	
+	public void updateExcelFile(String fileName,Workbook workbook)
+ {
+
+		FileOutputStream output_file;
+		try {
+			// Open FileOutputStream to write updates
+			output_file = new FileOutputStream(new File(fileName));
+			workbook.write(output_file); // write changes
+			output_file.close(); // close the stream
+
+		} catch (IOException e) {
+			logger.error("CANT WRITE FILE", e);
+			throw new ESICException("CANT WRITE FILE", e);
+		}
+
 	}
 	
 }

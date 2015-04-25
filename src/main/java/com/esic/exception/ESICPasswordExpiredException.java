@@ -7,7 +7,7 @@ public class ESICPasswordExpiredException extends ESICException {
 	private static final long serialVersionUID = 6281958986513580248L;
 
 	public ESICPasswordExpiredException(String orgString) {
-		super("PAssword Expired for " + orgString, null);
+		super("Password Expired for " + orgString, null);
 
 	}
 
