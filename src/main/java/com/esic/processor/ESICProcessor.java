@@ -15,6 +15,11 @@ import com.esic.Dao.XLSXFileReader;
 import com.esic.domain.ESICRecord;
 import com.esic.exception.ESICException;
 
+/**
+ * Main backend logic class...
+ * @author meet
+ *
+ */
 public class ESICProcessor {
 
 	final static Logger logger = Logger.getLogger(ESICProcessor.class);
@@ -51,18 +56,18 @@ public class ESICProcessor {
 		try {
 			sheet = fileReader.readSheetInExcel(fileName);
 			logger.info("Opened file " + fileName);
-		} catch (IOException e) {
+		} catch (IOException e) {//THROWS NEW
 			logger.error("Can not open file", e);
 			throw new ESICException("can not open file" + fileName, e);
 		}
 
-		fileReader.printExcelFile(sheet);
+	//	fileReader.printExcelFile(sheet);
 		ESICExcelDAO domainTranslator = ObjectStore.getExcelDAO();
 		List<ESICRecord> records = domainTranslator.getESICRecords(sheet);
 		return records;
 	}
 
-	private void printRecords(List<ESICRecord> records) {
+	public void printRecords(List<ESICRecord> records) {
 		for (ESICRecord esicRecord : records) {
 			System.out.println(esicRecord);
 		}

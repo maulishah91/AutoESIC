@@ -1,7 +1,7 @@
 package com.esic.exception;
 
 
-public class ESICException extends Exception {
+public class ESICException extends RuntimeException {
 
 	public ESICException(String string, Exception e) {
 		super(string, e);

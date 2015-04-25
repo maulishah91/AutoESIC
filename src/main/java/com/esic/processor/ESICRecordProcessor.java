@@ -2,9 +2,13 @@ package com.esic.processor;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.esic.domain.ESICRecord;
 
 public class ESICRecordProcessor {
+
+	final static Logger logger = Logger.getLogger(ESICRecordProcessor.class);
 
 	/**
 	 * main method to process a single record
@@ -14,11 +18,7 @@ public class ESICRecordProcessor {
 	public void processRecord(ESICRecord record) {
 		
 		
-		
-		
-		
-		
-		
+		logger.debug(record);
 		
 
 	}

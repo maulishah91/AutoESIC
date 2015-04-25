@@ -2,11 +2,13 @@ package com.esic.Dao;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
@@ -43,23 +45,48 @@ public class ESICExcelDAO {
 		// Get iterator to all the rows in current sheet
 		Iterator<Row> rowIterator = sheet.iterator();
 
-		boolean skippedFirstRow = false;
+		
 		// Traversing over each row of XLSX file
+		
+		
 		while (rowIterator.hasNext()) {
 			Row row = rowIterator.next();
-			if (!skippedFirstRow) {
-				skippedFirstRow = true;
-			}
-			// for normal processing or row..
-			else {
+			//skipping first 3 header rows.. 0 ,1 and 2nd rows.
+			if (row.getRowNum() >2) {
+				
+				if(isFirstColumnEmpty(row))
+				{
+					break;
+				}
+				else
+				{	
 				records.add(getRecordFromRow(row));
+			}
 			}
 
 		}
 
 		return records;
+	
+
 	}
 
+	/**
+	 * is first column empty for record./excewl row..
+	 * @param row
+	 * @return
+	 */
+	private boolean isFirstColumnEmpty(Row row) {
+
+		row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
+		String value = row.getCell(0).getStringCellValue();
+
+//		null then empty so send true .. or check one more time if its empty or not ..//
+		return (value == null || value.trim().isEmpty());
+
+	}
+	
+	
 	/**
 	 * generate single record from excel row.
 	 * 
@@ -74,17 +101,49 @@ public class ESICExcelDAO {
 		record.setExcelRow(row);
 
 		for (ESICExcelColumns column : ESICExcelColumns.values()) {
+
 			int position = column.ordinal();
-			row.getCell(position).setCellType(Cell.CELL_TYPE_STRING);
-			String value = row.getCell(position).getStringCellValue();
-			record.put(column.name(), value);
-			
-			
+			String value = null;
+
+			Cell c = row.getCell(position);
+
+			if (c != null) {
+				
+				System.out.println(c.getCellType() );
+				
+				if(c.getCellType() == Cell.CELL_TYPE_NUMERIC && DateUtil.isCellDateFormatted(c))
+				{
+
+					Date d = c.getDateCellValue();
+					value = com.esic.util.DateUtil.ddMMyyFormat.format(d);
+
+				}
+				else
+				{
+				c.setCellType(Cell.CELL_TYPE_STRING);
+				value = c.getStringCellValue();
+				}
+				
+				
+				
+				logEmptyValue(row, column, value);
+				record.put(column.name(), value);
+
+				
+			}
+
 		}
 		
 		ESICRecordHelper.populateDependentList(record);
 		
 
 		return record;
+	}
+
+	private void logEmptyValue(Row row, ESICExcelColumns column, String value) {
+		if(value == null)
+		{
+			logger.warn("Empty Value for "+ column.name() + "At row "+ row.getRowNum());
+		}
 	}
 }

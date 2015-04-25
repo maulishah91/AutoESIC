@@ -2,6 +2,17 @@ package com.esic.domain;
 
 public class Dependent {
 
+	@Override
+	public String toString() {
+		return "Dependent ["
+				+ (name != null ? "name=" + name + ", " : "")
+				+ (dob != null ? "dob=" + dob + ", " : "")
+				+ (relationship != null ? "relationship=" + relationship + ", "
+						: "") + "residingWithHim=" + residingWithHim + ", "
+				+ (town != null ? "town=" + town + ", " : "")
+				+ (state != null ? "state=" + state + ", " : "")
+				+ (aadharID != null ? "aadharID=" + aadharID : "") + "]";
+	}
 	private String name;
 	private ESICDate dob;
 	private String relationship;

@@ -1,10 +1,11 @@
 package com.esic.domain;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import com.esic.util.DateUtil;
 
 public class ESICDate {
 
@@ -40,19 +41,20 @@ public class ESICDate {
 		setdate(date);
 	}
 
-	SimpleDateFormat mmmDateFormat = new SimpleDateFormat("MMM");
-	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
 
 	public void setdate(String dateString) throws ParseException {
+		Date d = DateUtil.ddMMyyFormat.parse(dateString);
+		setDate(d);
+	}
 
-		Date d = simpleDateFormat.parse(dateString);
+	public void setDate(Date d) {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(d);
-
 		date = cal.get(Calendar.DATE);
 		year = cal.get(GregorianCalendar.YEAR);
-		month = mmmDateFormat.format(cal.getTime());
-
+		month = DateUtil.mmmFormat.format(cal.getTime());
 	}
+	
+	
 
 }

@@ -30,7 +30,7 @@ public class XLSXFileReader {
 		
 		XSSFSheet mySheet = reader.readSheetInExcel(fileName, 0);
 
-		reader.printExcelFile(mySheet);
+		//reader.printExcelFile(mySheet);
 	}
 
 
