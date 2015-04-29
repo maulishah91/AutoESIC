@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 
+import com.esic.domain.ESICDate;
+
 /**
  * 
  * @author Mauli
@@ -22,6 +24,15 @@ public abstract class DatePickerMain {
 	 * adding 10 will prevent this from happening
 	 */
 	int currentYear=Calendar.getInstance().get(Calendar.YEAR)+10; 
+	
+	/**
+	 * Additional Wripper Method.
+	 */
+	public void selectDateOnDatePicker(ESICDate date)
+	{
+	 
+		this.selectDateOnDatePicker(""+date.getYear(), date.getMonth(), ""+date.getDate());
+	}
 	
 	public void selectDateOnDatePicker(String year,String month,String day) throws ExceptionInDateSelectionFromDatePicker{
 		initialiseCalendarTitleValues();

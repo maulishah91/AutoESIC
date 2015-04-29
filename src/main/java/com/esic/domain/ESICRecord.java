@@ -8,11 +8,106 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.esic.domain.annotations.ESICExcelColumns;
+import com.esic.util.DateUtil;
 
 
 public class ESICRecord extends HashMap<String, String> {
 
-						
+	private static final long serialVersionUID = -8654523891587959352L;
+	
+	/**
+	 * BAckreference object...( for updation purpose)
+	 */
+	private Row excelRow;
+
+	public Row getExcelRow() {
+		return excelRow;
+	}
+
+	public void setExcelRow(Row excelRow) {
+		this.excelRow = excelRow;
+	}
+	
+
+	private List<Dependent> dependents;
+	
+	
+	
+	
+	
+	public List<Dependent> getDependents() {
+		
+		if(dependents == null)
+		{
+			dependents = new ArrayList<Dependent>();
+		}
+		return dependents;
+	}
+
+	public void setDependents(List<Dependent> dependents) {
+		this.dependents = dependents;
+	}
+	
+	
+	
+	public void setAutoEsicStatus(String value) {
+		 this.put(ESICExcelColumns.autoEsicStatus.toString(), value);
+		Cell cell = this.excelRow.getCell(ESICExcelColumns.autoEsicStatus.ordinal());
+		
+		if(cell == null){
+			 cell = this.excelRow.createCell(ESICExcelColumns.autoEsicStatus.ordinal());
+		}
+		
+		cell.setCellValue(value);
+	}
+
+	public void setAutoEsicComments(String value) {
+		 this.put(ESICExcelColumns.autoEsicComments.toString(), value);
+			Cell cell = this.excelRow.getCell(ESICExcelColumns.autoEsicStatus.ordinal());
+			
+		 
+		if (cell == null) {
+			cell = this.excelRow.createCell(ESICExcelColumns.autoEsicComments.ordinal());
+		}
+			
+			cell.setCellValue(value);
+	}
+
+	
+	
+	
+	
+
+	public ESICDate getDateOfAppointmentESICDate() {
+		String date = this.getDateOfAppointment();
+		return DateUtil.getDate(date);
+	}
+
+
+
+	public ESICDate getDateOfBirthESICDate(){
+		String date = this.getDateOfBirth();
+		return DateUtil.getDate(date);
+	}
+	
+	
+	
+	public int getMaritialStatusNumber() {
+
+		if (getMatitalStatus().contains("Unmarried")) {
+			return 0;
+		} else if (getMatitalStatus().contains("Married")) {
+
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+	
+	
+	
+
+	
 	@Override
 	public String toString() {
 		return "ESICRecord ["
@@ -323,67 +418,6 @@ public class ESICRecord extends HashMap<String, String> {
 	}
 
 
-	private static final long serialVersionUID = -8654523891587959352L;
-	
-	/**
-	 * BAckreference object...( for updation purpose)
-	 */
-	private Row excelRow;
-
-	public Row getExcelRow() {
-		return excelRow;
-	}
-
-	public void setExcelRow(Row excelRow) {
-		this.excelRow = excelRow;
-	}
-	
-
-	private List<Dependent> dependents;
-	
-	
-	
-	
-	
-	public List<Dependent> getDependents() {
-		
-		if(dependents == null)
-		{
-			dependents = new ArrayList<Dependent>();
-		}
-		return dependents;
-	}
-
-	public void setDependents(List<Dependent> dependents) {
-		this.dependents = dependents;
-	}
-	
-	
-	
-	public void setAutoEsicStatus(String value) {
-		 this.put(ESICExcelColumns.autoEsicStatus.toString(), value);
-		Cell cell = this.excelRow.getCell(ESICExcelColumns.autoEsicStatus.ordinal());
-		
-		if(cell == null){
-			 cell = this.excelRow.createCell(ESICExcelColumns.autoEsicStatus.ordinal());
-		}
-		
-		cell.setCellValue(value);
-	}
-
-	public void setAutoEsicComments(String value) {
-		 this.put(ESICExcelColumns.autoEsicComments.toString(), value);
-			Cell cell = this.excelRow.getCell(ESICExcelColumns.autoEsicStatus.ordinal());
-			
-		 
-		if (cell == null) {
-			cell = this.excelRow.createCell(ESICExcelColumns.autoEsicComments.ordinal());
-		}
-			
-			cell.setCellValue(value);
-	}
-
-	
 	
 	
 
@@ -1243,6 +1277,7 @@ public class ESICRecord extends HashMap<String, String> {
 
 	 public String getBankAccountIFSC(){
 	return this.get("bankAccountIFSC"); }
+
 	
 
 }

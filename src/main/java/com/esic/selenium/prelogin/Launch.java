@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.esic.domain.ESICRecord;
 /**
  * 
  * @author Mauli
@@ -17,10 +19,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class Launch {
 
+	
+	public static ESICRecord record;
 	public static WebDriver driver;
 	public static String base="";
 	final static Logger logger = Logger.getLogger(Launch.class);
 	
+	
+	
+	public Launch() {
+	loadDriver();
+	}
 	public static void main(String[] args) throws InterruptedException {
 		try{	
 		loadDriver();
@@ -38,7 +47,8 @@ public class Launch {
 		closeDriver();
 		}
 	}
-	private void process() throws Exception{
+	
+	public void process() throws Exception{
 		InitialisePO initPO=new InitialisePO();
 		initPO.initialisePageObject(new PreLogin());
 		/*For now the sequence is : 
@@ -49,6 +59,13 @@ public class Launch {
 	
 	
 	public static void loadDriver(){
+		
+		//short return if driver already present.
+		if (driver != null) {
+			return;
+		}
+		
+		
 		try{
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -60,7 +77,7 @@ public class Launch {
 	
 	public static void closeDriver(){
 		try{
-			driver.quit();
+	//TODO: temporary disable.		driver.quit();
 			}
 			catch(Exception e){
 				logger.error("Error in closing Firefox Driver");

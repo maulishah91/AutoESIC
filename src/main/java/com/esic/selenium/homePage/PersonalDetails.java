@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.domain.ESICDate;
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.contactDetails.PresentContactDetails;
 import com.esic.selenium.datePicker.DateOfBirth;
 import com.esic.selenium.prelogin.Launch;
@@ -47,12 +49,22 @@ public class PersonalDetails {
 	
 		
 	public PresentContactDetails process(){
-		enterFatherOrHusbandName(0, "dad");
-		enterDateOfBirth("24/12/2323");
-		enterAadharCard("21232434343");
-		enterEmpName("abcd");
-		selectGender("f");
-		selectMartialStatus("1");
+		
+		ESICRecord record = Launch.record;
+		
+		int isHusband = Integer.parseInt(record.getIsHusband());
+		
+		enterFatherOrHusbandName(isHusband, record.getHusbandOrFatherName());
+
+		enterDateOfBirth(record.getDateOfBirthESICDate());
+		enterAadharCard(record.getAadharID());
+		
+		
+		enterEmpName(record.getEmployeeName());
+		selectGender(record.getGender());
+		selectMartialStatus(record.getMaritialStatusNumber());
+		
+		
 		return new PresentContactDetails();
 	}
 	//mandatory
@@ -76,12 +88,12 @@ public class PersonalDetails {
 	
 	//date of birth : mandatory & age cannot be less than 14
 	//acc to site it has to be dd/mm/yyyy 
-	public void enterDateOfBirth(String BirthDate){
+	public void enterDateOfBirth(ESICDate dob){
 		//perform date validation and fetch dd, mm and yyyy
 		dateOfBirth.click(); //this will lead to creation of datepicker element in dom
 		DateOfBirth pickDate=PageFactory.initElements(Launch.driver, DateOfBirth.class);
 		//to do: perform validation that the values entered are valid
-		pickDate.selectDateOnDatePicker("1991","Dec","24");
+		pickDate.selectDateOnDatePicker(dob);
 		
 	}
 	
@@ -93,8 +105,8 @@ public class PersonalDetails {
 	}
 	
 	//martial status: mandatory :ask if int value is poss or not
-	public void selectMartialStatus(String martialStatusValue){
-		int value=Integer.parseInt(martialStatusValue.trim());
+	public void selectMartialStatus(int i){
+		int value =i;
 		martialStatus.click();
 		List<WebElement> options=martialStatus.findElements(By.xpath("./option"));
 		//validate that the values belong to 0-3 range
@@ -103,10 +115,10 @@ public class PersonalDetails {
 	
 	//gender(sex) : mandatory
 	public void selectGender(String gender){
-		if(gender.equalsIgnoreCase("M")){
+		if(gender.equalsIgnoreCase("Male")){
 			maleRadioButton.click();
 		}
-		else if(gender.equalsIgnoreCase("F")){
+		else if(gender.equalsIgnoreCase("Female")){
 			femaleRadioButton.click();
 		}
 		else{

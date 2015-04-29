@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.homePage.UserHomePage;
 /**
  * 
@@ -36,7 +37,10 @@ public class Login {
 	
 	public UserHomePage process(){
 		//from excel sheet
-		return login("35000012800001099", "12345march");
+		ESICRecord record = Launch.record;
+		String userName = record.getEsicUserName();
+		String password = record.getEsicPassword();
+		return login(userName,password);
         /*String uName=JOptionPane.showInputDialog("Enter username");
 		String pWord=JOptionPane.showInputDialog("Enter password");
 		return login(uName, pWord);*/

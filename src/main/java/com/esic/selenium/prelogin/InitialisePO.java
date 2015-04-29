@@ -3,6 +3,8 @@ package com.esic.selenium.prelogin;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 
@@ -23,6 +25,11 @@ import com.esic.selenium.homePage.UserHomePage;
 public class InitialisePO{
 	final static Logger logger = Logger.getLogger(InitialisePO.class);
 	
+	/**
+	 * run pagg object..
+	 * @param object
+	 * @throws Exception
+	 */
 	public void initialisePageObject(Object object) throws Exception{		
 		try {
 			object=PageFactory.initElements(Launch.driver, object.getClass());
@@ -30,7 +37,12 @@ public class InitialisePO{
 			Method method=object.getClass().getMethod("process");
 			if(method.getReturnType().equals(Void.TYPE)){
 				//no more POs to be called. hence logging out of application
-				logout();
+				
+				
+				JOptionPane.showMessageDialog(null, "Please click save afer confirm.");
+				
+				
+		//		logout();
 				return;
 			}
 			Object poToInvoke=method.invoke(object);
@@ -39,6 +51,11 @@ public class InitialisePO{
 				initialisePageObject(poToInvoke);
 				return;
 			}
+			else
+			{
+			JOptionPane.showMessageDialog(null, "Please click save afer confirm.");
+			}
+			
 			logger.error("Loading of object post call of "+object.getClass() +" has failed. Exiting out of the application");
 			throw new Exception("Failure in loading object");
 		} catch (NoSuchMethodException e){

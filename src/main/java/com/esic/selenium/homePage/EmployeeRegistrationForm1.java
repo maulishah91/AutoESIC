@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.apache.log4j.Logger;
 
+import com.esic.domain.ESICDate;
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.datePicker.DateOfAppointment;
 import com.esic.selenium.prelogin.Launch;
 
@@ -30,7 +32,17 @@ public class EmployeeRegistrationForm1 {
 	WebElement dateOfAppointment;
 	
 	public PersonalDetails process(){
-		enterDateOfAppointment("24/12/1212");
+		
+		
+		ESICRecord record = Launch.record;
+		
+		ESICDate doa = record.getDateOfAppointmentESICDate();
+		
+		
+		
+		enterDateOfAppointment(doa);
+		
+		//TODO: use values from RECORD...
 		SelectdispensaryOrImp("imp");
 		return new PersonalDetails();
 	}
@@ -46,12 +58,12 @@ public class EmployeeRegistrationForm1 {
 	
 	//date of apponitment : mandatory
 	//acc to site it has to be dd/mm/yyyy 
-	public void enterDateOfAppointment(String BirthDate){
+	public void enterDateOfAppointment(ESICDate doa){
 		//perform date validation and fetch dd, mm and yyyy
 		dateOfAppointment.click(); ////this will lead to creation of datepicker element in dom
 		DateOfAppointment pickDate=PageFactory.initElements(Launch.driver, DateOfAppointment.class);
 		//to do: perform validation that the values entered are valid
-		pickDate.selectDateOnDatePicker("1991","Dec","24");
+		pickDate.selectDateOnDatePicker(""+doa.getYear(),doa.getMonth(),""+doa.getDate());
 		
 	}
 }
