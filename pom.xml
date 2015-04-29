@@ -140,7 +140,7 @@
                 <jar>target/${artifactId}-${version}-shaded.jar</jar> <!-- 'shaded' is the value set on shadedClassifierName above -->
                 <errTitle>App Err</errTitle>
                 <classPath>
-                    <mainClass>com.esic.selenium.prelogin.Launch</mainClass>
+                     <mainClass>com.esic.ui.UI</mainClass>
                    
                 </classPath>
                 <icon>src/main/resources/icons/exeIcon.ico</icon>
@@ -175,10 +175,10 @@
             <configuration>
                 <headerType>console</headerType>
                 <outfile>target/app-cli.exe</outfile>
-                <jar>target/${artifactId}-${version}-shaded.jar</jar> 'shaded' is the value set on shadedClassifierName above
+                <jar>target/${artifactId}-${version}-shaded.jar</jar><!--  'shaded' is the value set on shadedClassifierName above -->
                 <errTitle>App Err</errTitle>
                 <classPath>
-                    <mainClass>com.esic.Launch</mainClass>
+                     <mainClass>com.esic.ui.UI</mainClass>
                    
                 </classPath>
                 <icon>src/main/resources/icons/exeIcon.ico</icon>
