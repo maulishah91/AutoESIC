@@ -25,28 +25,18 @@ public class ESICRecordProcessor {
 	 * @param record
 	 * @throws Exception 
 	 */
-	public void processRecord(ESICRecord record) throws Exception {
-		
-		
+	public void processRecord(ESICRecord record) {
 		logger.debug(record);
 		Launch.record = record;
 		seleniumProcessor.process();		
-
-		
 		record.setAutoEsicStatus("PASSTEST");
-		
-		
-
 	}
 
-	public void processRecords(List<ESICRecord> records) throws Exception {
+	public void processRecords(List<ESICRecord> records){
 		
 		for (ESICRecord esicRecord : records) {
-
 			processRecord(esicRecord);
-			
 			ObjectStore.getExcelDAO().updateRecord(esicRecord);
-			
 		}
 
 	}

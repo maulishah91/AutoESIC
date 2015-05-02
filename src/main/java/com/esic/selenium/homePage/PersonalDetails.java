@@ -13,6 +13,7 @@ import com.esic.domain.ESICRecord;
 import com.esic.selenium.contactDetails.PresentContactDetails;
 import com.esic.selenium.datePicker.DateOfBirth;
 import com.esic.selenium.prelogin.Launch;
+import com.esic.util.DropdownUtil;
 
 public class PersonalDetails {
 
@@ -51,20 +52,15 @@ public class PersonalDetails {
 	public PresentContactDetails process(){
 		
 		ESICRecord record = Launch.record;
+		enterEmpName(record.getEmployeeName());
+		selectMartialStatus(record.getMatitalStatus());
 		
 		int isHusband = Integer.parseInt(record.getIsHusband());
-		
 		enterFatherOrHusbandName(isHusband, record.getHusbandOrFatherName());
-
+		
 		enterDateOfBirth(record.getDateOfBirthESICDate());
 		enterAadharCard(record.getAadharID());
-		
-		
-		enterEmpName(record.getEmployeeName());
 		selectGender(record.getGender());
-		selectMartialStatus(record.getMaritialStatusNumber());
-		
-		
 		return new PresentContactDetails();
 	}
 	//mandatory
@@ -105,12 +101,9 @@ public class PersonalDetails {
 	}
 	
 	//martial status: mandatory :ask if int value is poss or not
-	public void selectMartialStatus(int i){
-		int value =i;
+	public void selectMartialStatus(String martialValue){
 		martialStatus.click();
-		List<WebElement> options=martialStatus.findElements(By.xpath("./option"));
-		//validate that the values belong to 0-3 range
-		options.get(value).click(); 
+		DropdownUtil.selectDropdown(martialValue, martialStatus);
 	}
 	
 	//gender(sex) : mandatory

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.selenium.prelogin.Launch;
+import com.esic.selenium.secondaryForm.NomineeDetails;
 
 /**
  * 
@@ -17,6 +18,10 @@ import com.esic.selenium.prelogin.Launch;
 public class PermanentContactDetails extends ContactDetails{
 	
 	final static Logger logger = Logger.getLogger(PermanentContactDetails.class);
+	
+	//checkbox 
+	@FindBy(id="ctl00_HomePageContent_chkboxCopyPresentAddress")
+	WebElement copyPresentAddressDetails;
 	
 	//multiple address lines.. split address into lengths of 50
 	@FindBy(id="ctl00_HomePageContent_ctrlTextPermanentAddress1")
@@ -47,7 +52,24 @@ public class PermanentContactDetails extends ContactDetails{
 	@FindBy(id="ctl00_HomePageContent_ctrlTextPermanentEmail")
 	WebElement email;
 	
-
+	public NomineeDetails process(){
+		//check if box is ticked, if not then enter details below
+		if(Launch.record.isCheckBoxTrueForPermanentDetails()){
+			copyPresentAddressDetails.click();
+		}
+		else{
+		enterMandatoryAddress(Launch.record.getPresentAddress_Address());
+		enterDetailForField("email", Launch.record.getPermanntAddress_emailID());
+		enterDetailForField("district", Launch.record.getPermanntAddress_District());
+		enterDetailForField("state", Launch.record.getPermanntAddress_State());
+		enterDetailForField("district", Launch.record.getPermanntAddress_District());
+		enterDetailForField("phone", Launch.record.getPermanntAddress_PhoneNo());
+		enterDetailForField("mobile", Launch.record.getPermanntAddress_MobileNo());
+		enterDetailForField("pincode", Launch.record.getPermanntAddress_PinCode());
+		}
+		return new NomineeDetails();
+	}
+	
 	protected void loadAddressValues(){
 		mandatoryAddress=new ArrayList<WebElement>();
 		mandatoryAddress.add(mandatoryAddressLine1);

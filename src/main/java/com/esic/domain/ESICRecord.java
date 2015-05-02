@@ -73,48 +73,40 @@ public class ESICRecord extends HashMap<String, String> {
 			cell.setCellValue(value);
 	}
 
-	
-	
-	
-	
+	public boolean isCheckBoxTrueForPermanentDetails(){
+		String yesOrNo=this.getCopyPresentDetailsToPermanent();
+		if(yesOrNo.trim().equalsIgnoreCase("yes")){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 	public ESICDate getDateOfAppointmentESICDate() {
 		String date = this.getDateOfAppointment();
 		return DateUtil.getDate(date);
 	}
 
-
-
 	public ESICDate getDateOfBirthESICDate(){
 		String date = this.getDateOfBirth();
 		return DateUtil.getDate(date);
 	}
-	
-	
-	
-	public int getMaritialStatusNumber() {
 
-		if (getMatitalStatus().contains("Unmarried")) {
-			return 0;
-		} else if (getMatitalStatus().contains("Married")) {
-
-			return 1;
-		} else {
-			return -1;
-		}
-	}
-	
-	
-	
-
-	
 	@Override
 	public String toString() {
 		return "ESICRecord ["
-			
 				+ (dependents != null ? "dependents=" + dependents + ", " : "")
-	     		+ (getDependents() != null ? "getDependents()="
+				+ (getExcelRow() != null ? "getExcelRow()=" + getExcelRow()
+						+ ", " : "")
+				+ (getDependents() != null ? "getDependents()="
 						+ getDependents() + ", " : "")
+				+ (getDateOfAppointmentESICDate() != null ? "getDateOfAppointmentESICDate()="
+						+ getDateOfAppointmentESICDate() + ", "
+						: "")
+				+ (getDateOfBirthESICDate() != null ? "getDateOfBirthESICDate()="
+						+ getDateOfBirthESICDate() + ", "
+						: "")
 				+ (getSrNo() != null ? "getSrNo()=" + getSrNo() + ", " : "")
 				+ (getEsicUserName() != null ? "getEsicUserName()="
 						+ getEsicUserName() + ", " : "")
@@ -150,14 +142,8 @@ public class ESICRecord extends HashMap<String, String> {
 						+ getDateOfAppointment() + ", " : "")
 				+ (getAadharID() != null ? "getAadharID()=" + getAadharID()
 						+ ", " : "")
-				+ (getPresentAddress_Address1() != null ? "getPresentAddress_Address1()="
-						+ getPresentAddress_Address1() + ", "
-						: "")
-				+ (getPresentAddress_Address2() != null ? "getPresentAddress_Address2()="
-						+ getPresentAddress_Address2() + ", "
-						: "")
-				+ (getPresentAddress_Address3() != null ? "getPresentAddress_Address3()="
-						+ getPresentAddress_Address3() + ", "
+				+ (getPresentAddress_Address() != null ? "getPresentAddress_Address()="
+						+ getPresentAddress_Address() + ", "
 						: "")
 				+ (getPresentAddress_District() != null ? "getPresentAddress_District()="
 						+ getPresentAddress_District() + ", "
@@ -177,14 +163,11 @@ public class ESICRecord extends HashMap<String, String> {
 				+ (getPresentAddress_emailID() != null ? "getPresentAddress_emailID()="
 						+ getPresentAddress_emailID() + ", "
 						: "")
-				+ (getPermanntAddress_Address1() != null ? "getPermanntAddress_Address1()="
-						+ getPermanntAddress_Address1() + ", "
+				+ (getCopyPresentDetailsToPermanent() != null ? "getCopyPresentDetailsToPermanent()="
+						+ getCopyPresentDetailsToPermanent() + ", "
 						: "")
-				+ (getPermanntAddress_Address2() != null ? "getPermanntAddress_Address2()="
-						+ getPermanntAddress_Address2() + ", "
-						: "")
-				+ (getPermanntAddress_Address3() != null ? "getPermanntAddress_Address3()="
-						+ getPermanntAddress_Address3() + ", "
+				+ (getPermanntAddress_Address() != null ? "getPermanntAddress_Address()="
+						+ getPermanntAddress_Address() + ", "
 						: "")
 				+ (getPermanntAddress_District() != null ? "getPermanntAddress_District()="
 						+ getPermanntAddress_District() + ", "
@@ -211,14 +194,19 @@ public class ESICRecord extends HashMap<String, String> {
 						: "")
 				+ (getNomineeAddress() != null ? "getNomineeAddress()="
 						+ getNomineeAddress() + ", " : "")
+				+ (getIsnomineeAFamilyMember() != null ? "getIsnomineeAFamilyMember()="
+						+ getIsnomineeAFamilyMember() + ", "
+						: "")
+				+ (getNomineeState() != null ? "getNomineeState()="
+						+ getNomineeState() + ", " : "")
+				+ (getNomineeDistrict() != null ? "getNomineeDistrict()="
+						+ getNomineeDistrict() + ", " : "")
 				+ (getNomineePinCode() != null ? "getNomineePinCode()="
 						+ getNomineePinCode() + ", " : "")
 				+ (getNomineePhoneNo() != null ? "getNomineePhoneNo()="
 						+ getNomineePhoneNo() + ", " : "")
 				+ (getNomineeMobileNo() != null ? "getNomineeMobileNo()="
 						+ getNomineeMobileNo() + ", " : "")
-				+ (getNomineeEmailID() != null ? "getNomineeEmailID()="
-						+ getNomineeEmailID() + ", " : "")
 				+ (getNomineeAadharID() != null ? "getNomineeAadharID()="
 						+ getNomineeAadharID() + ", " : "")
 				+ (getDependent_1_Name() != null ? "getDependent_1_Name()="
@@ -416,11 +404,7 @@ public class ESICRecord extends HashMap<String, String> {
 				+ (getBankAccountIFSC() != null ? "getBankAccountIFSC()="
 						+ getBankAccountIFSC() : "") + "]";
 	}
-
-
 	
-	
-
 	//AUTO GENERATE CODE....
 	
 	
@@ -430,6 +414,7 @@ public class ESICRecord extends HashMap<String, String> {
 
 	 public String getSrNo(){
 	return this.get("srNo"); }
+
 
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
@@ -554,22 +539,8 @@ public class ESICRecord extends HashMap<String, String> {
 	  *    see  ESICREcordMapMethodGenerator 
 	 */ 
 
-	 public String getPresentAddress_Address1(){
-	return this.get("presentAddress_Address1"); }
-
-	/** 
-	  *    see  ESICREcordMapMethodGenerator 
-	 */ 
-
-	 public String getPresentAddress_Address2(){
-	return this.get("presentAddress_Address2"); }
-
-	/** 
-	  *    see  ESICREcordMapMethodGenerator 
-	 */ 
-
-	 public String getPresentAddress_Address3(){
-	return this.get("presentAddress_Address3"); }
+	 public String getPresentAddress_Address(){
+	return this.get("presentAddress_Address"); }
 
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
@@ -617,22 +588,15 @@ public class ESICRecord extends HashMap<String, String> {
 	  *    see  ESICREcordMapMethodGenerator 
 	 */ 
 
-	 public String getPermanntAddress_Address1(){
-	return this.get("permanntAddress_Address1"); }
+	 public String getCopyPresentDetailsToPermanent(){
+	return this.get("copyPresentDetailsToPermanent"); }
 
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
 	 */ 
 
-	 public String getPermanntAddress_Address2(){
-	return this.get("permanntAddress_Address2"); }
-
-	/** 
-	  *    see  ESICREcordMapMethodGenerator 
-	 */ 
-
-	 public String getPermanntAddress_Address3(){
-	return this.get("permanntAddress_Address3"); }
+	 public String getPermanntAddress_Address(){
+	return this.get("permanntAddress_Address"); }
 
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
@@ -701,6 +665,27 @@ public class ESICRecord extends HashMap<String, String> {
 	  *    see  ESICREcordMapMethodGenerator 
 	 */ 
 
+	 public String getIsnomineeAFamilyMember(){
+	return this.get("isnomineeAFamilyMember"); }
+
+	/** 
+	  *    see  ESICREcordMapMethodGenerator 
+	 */ 
+
+	 public String getNomineeState(){
+	return this.get("nomineeState"); }
+
+	/** 
+	  *    see  ESICREcordMapMethodGenerator 
+	 */ 
+
+	 public String getNomineeDistrict(){
+	return this.get("nomineeDistrict"); }
+
+	/** 
+	  *    see  ESICREcordMapMethodGenerator 
+	 */ 
+
 	 public String getNomineePinCode(){
 	return this.get("nomineePinCode"); }
 
@@ -717,13 +702,6 @@ public class ESICRecord extends HashMap<String, String> {
 
 	 public String getNomineeMobileNo(){
 	return this.get("nomineeMobileNo"); }
-
-	/** 
-	  *    see  ESICREcordMapMethodGenerator 
-	 */ 
-
-	 public String getNomineeEmailID(){
-	return this.get("nomineeEmailID"); }
 
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
@@ -1277,7 +1255,5 @@ public class ESICRecord extends HashMap<String, String> {
 
 	 public String getBankAccountIFSC(){
 	return this.get("bankAccountIFSC"); }
-
-	
 
 }

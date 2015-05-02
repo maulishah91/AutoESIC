@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import com.esic.util.DropdownUtil;
+
 /**
  * 
  * @author Mauli
@@ -40,25 +42,7 @@ public abstract class ContactDetails {
 		//state: mandatory
 		protected void selectState(String stateValue,WebElement state){
 			state.click();
-			Select dropdown = new Select(state);
-			dropdown.selectByVisibleText(stateValue);
-			try {
-			dropdown.getFirstSelectedOption();
-			logger.info("State selected is : "+stateValue);
-			isStateEntered=true;
-			}
-			catch(Exception e){
-				logger.error("State not found");
-			}
-		/*	List<WebElement> options=state.findElements(By.xpath("./option"));
-			for(WebElement w:options){
-				if(w.getText().trim().equalsIgnoreCase(stateValue.trim())){
-					logger.info("State selected is : "+stateValue);
-					w.click();
-					isStateEntered=true;
-					break;
-				}
-			}*/
+			isStateEntered=DropdownUtil.selectDropdown(stateValue, state);
 		}
 		
 		//district: mandatory
@@ -66,22 +50,7 @@ public abstract class ContactDetails {
 			if(isStateEntered){
 				loadDistrict();
 				district.click();
-				Select dropdown = new Select(district);
-				try{
-				dropdown.selectByVisibleText(districtName);
-				}
-				catch(Exception e){
-					logger.error("cannot find district");
-				}
-			/*	List<WebElement> options=district.findElements(By.xpath("./option"));
-				for(WebElement w:options){
-					if(w.getText().trim().equalsIgnoreCase(districtName.trim())){
-						logger.info("District selected is : "+districtName);
-						w.click();
-						break;
-					}
-				}*/
-			}	
+				DropdownUtil.selectDropdown(districtName, district);			}	
 			else{
 				logger.error("Select State before selecting district");
 			}

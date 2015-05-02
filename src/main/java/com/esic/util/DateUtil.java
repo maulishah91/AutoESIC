@@ -10,7 +10,7 @@ public class DateUtil {
 	
 	
 	public static final SimpleDateFormat mmmFormat = new SimpleDateFormat("MMM");
-	public static final SimpleDateFormat ddMMyyFormat = new SimpleDateFormat("dd/MM/yy");
+	public static final SimpleDateFormat ddMMyyFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	
 	

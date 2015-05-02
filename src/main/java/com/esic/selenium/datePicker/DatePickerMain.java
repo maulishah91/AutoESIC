@@ -82,7 +82,9 @@ public abstract class DatePickerMain {
 	}
 
 	private boolean selectYearFromDatePicker(int startYear, int endYear, String year1) {
+		System.out.println("actual year is : "+year1);
 		int year=Integer.parseInt(year1.trim());
+		System.out.println("post parsing year in int is : "+year);
 		if(year>startYear){
 			//check if it falls in the range and search for it or click next
 			if(year<endYear){

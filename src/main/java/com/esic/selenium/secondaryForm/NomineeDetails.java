@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.esic.selenium.contactDetails.NomineeContactDetails;
 import com.esic.selenium.prelogin.Launch;
+import com.esic.util.DropdownUtil;
 /**
  * 
  * @author Mauli
@@ -45,23 +46,24 @@ public class NomineeDetails {
 	
 	public NomineeContactDetails process(){
 		findNomineeDetails();
-		selectRelationshipWithIP("Dependant unmarried daughter");
-		boolean isFamilyMem=isNomineeAFamilyMember("no");
+		enterName(Launch.record.getNomineeName());
+		selectRelationshipWithIP(Launch.record.getNomineeRelationship());
+		boolean isFamilyMem=isNomineeAFamilyMember(Launch.record.getIsnomineeAFamilyMember());
 		if(!isFamilyMem){
 			//aadhar card details:
-			enterAadharID("1050234234");
+			enterAadharID(Launch.record.getNomineeAadharID());
 			
 		}
 		return new NomineeContactDetails();
 		
 	}
 	
+	public void enterName(String nameValue){
+		name.clear();
+		name.sendKeys(nameValue);
+	}
+	
 	public void findNomineeDetails(){
-		/*WebElement elem = Launch.driver.findElement(By.xpath("//td[contains(.,'Details of Nominee')]/following-sibling::td")); 
-		if (elem == null)  System.out.println("The nominee text is not found on the page!");
-		else{
-			System.out.println("here we goo: "+elem.getText());
-		}*/
 		nomineeLink.click();
 		logger.info("link is : "+nomineeLink.getText());
 		Launch.switchToNewWindow(); //check what happens when there are multiple handles, think of implementing LIFO approach to resolve the issue
@@ -76,14 +78,7 @@ public class NomineeDetails {
 	
 	private void selectRelationshipWithIP(String relationValue){
 		relationshipWithIp.click();
-		List<WebElement> options=relationshipWithIp.findElements(By.xpath("./option"));
-		for(WebElement w:options){
-			if(w.getText().trim().equalsIgnoreCase(relationValue.trim())){
-				logger.info("Relationship selected is : "+relationValue);
-				w.click();
-				break;
-			}
-		}
+		DropdownUtil.selectDropdown(relationValue, relationshipWithIp);
 	}
 	
 	private boolean isNomineeAFamilyMember(String value){

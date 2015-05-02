@@ -33,6 +33,9 @@ public class NomineeContactDetails extends ContactDetails{
 	@FindBy(id="ctl00_HomePageContent_States")
 	WebElement state;
 	
+	@FindBy(id="ctl00_HomePageContent_Districts")
+	WebElement district;
+	
 	@FindBy(id="ctl00_HomePageContent_ctrlTextPin")
 	WebElement pincode;
 	
@@ -51,14 +54,13 @@ public class NomineeContactDetails extends ContactDetails{
 	
 	@FindBy(id="ctl00_HomePageContent_btnClose")
 	WebElement closeBtn;
-	
+		
 	public FamilyParticularsForm process(){
-		enterMandatoryAddress("abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij");
-		enterDetailForField("email", "abc@abc.in");
-		enterDetailForField("district", "mum");
-		enterDetailForField("state", "Kerala");
-		enterDetailForField("district", "Kollam");
-		enterDetailForField("phone", "12345");
+		enterMandatoryAddress(Launch.record.getNomineeAddress());
+		enterDetailForField("district", Launch.record.getNomineeDistrict());
+		enterDetailForField("state", Launch.record.getNomineeState());
+		enterDetailForField("district",Launch.record.getNomineeDistrict());
+		enterDetailForField("phone",Launch.record.getNomineePhoneNo());
 		saveBtn.click();
 		closeBtn.click();
 		Launch.switchToNewWindow(); // this will get us back to the main form

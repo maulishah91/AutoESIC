@@ -32,17 +32,10 @@ public class EmployeeRegistrationForm1 {
 	WebElement dateOfAppointment;
 	
 	public PersonalDetails process(){
-		
-		
-		ESICRecord record = Launch.record;
-		
-		ESICDate doa = record.getDateOfAppointmentESICDate();
-		
-		
-		
+		ESICDate doa = Launch.record.getDateOfAppointmentESICDate();
 		enterDateOfAppointment(doa);
 		
-		//TODO: use values from RECORD...
+		//NOTE: THIS PART IS LEFT UNIMPLEMENTED FOR NOW
 		SelectdispensaryOrImp("imp");
 		return new PersonalDetails();
 	}
@@ -62,7 +55,6 @@ public class EmployeeRegistrationForm1 {
 		//perform date validation and fetch dd, mm and yyyy
 		dateOfAppointment.click(); ////this will lead to creation of datepicker element in dom
 		DateOfAppointment pickDate=PageFactory.initElements(Launch.driver, DateOfAppointment.class);
-		//to do: perform validation that the values entered are valid
 		pickDate.selectDateOnDatePicker(""+doa.getYear(),doa.getMonth(),""+doa.getDate());
 		
 	}

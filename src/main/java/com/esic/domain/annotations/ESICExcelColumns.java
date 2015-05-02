@@ -36,9 +36,7 @@ public 	enum ESICExcelColumns{
 		aadharID,
 
 		//S
-		presentAddress_Address1,
-		presentAddress_Address2,
-		presentAddress_Address3,
+		presentAddress_Address,
 		presentAddress_District ,
 		presentAddress_State,
 		presentAddress_PinCode,
@@ -46,10 +44,9 @@ public 	enum ESICExcelColumns{
 		presentAddress_MobileNo,
 		presentAddress_emailID,
 		
-		//AB
-		permanntAddress_Address1,
-		permanntAddress_Address2,
-		permanntAddress_Address3,
+		//Z
+		copyPresentDetailsToPermanent,
+		permanntAddress_Address,
 		permanntAddress_District,
 		permanntAddress_State,
 		permanntAddress_PinCode,
@@ -58,17 +55,19 @@ public 	enum ESICExcelColumns{
 		permanntAddress_emailID,
 
 		
-		//AK
+		//AH
 		nomineeName,
 		nomineeRelationship,
 		nomineeAddress,
+		isnomineeAFamilyMember,
+		nomineeState,
+		nomineeDistrict,
 		nomineePinCode,
 		nomineePhoneNo,
 		nomineeMobileNo,
-		nomineeEmailID,
 		nomineeAadharID,
 
-		//AS
+		//AR
 		dependent_1_Name,
 		dependent_1_DOB,
 		dependent_1_Relationship,

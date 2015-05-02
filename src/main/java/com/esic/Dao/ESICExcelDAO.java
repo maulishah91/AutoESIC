@@ -129,7 +129,7 @@ public class ESICExcelDAO {
 					// cell..
 					int celltype = c.getCellType();
 					c.setCellType(Cell.CELL_TYPE_STRING);
-					value = c.getStringCellValue();
+					value = c.getStringCellValue().trim();
 				//	c.setCellType(celltype);
 				}
 

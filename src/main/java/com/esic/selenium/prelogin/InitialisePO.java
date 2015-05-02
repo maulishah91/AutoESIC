@@ -20,13 +20,13 @@ import com.esic.selenium.homePage.UserHomePage;
  *In this scenario the user will be logged out of the application
  *
  *For now the sequence is : //Prelogin--> Login --> UserHomePage --> IPRegistration --> EmployeeRegistrationForm1 --> PersonalDetails --> PresentContactDetails
-  --> NomineeDetails -->FamilyParticularsForm--> DetailsOfBankAccount -->SubmitFormAndExportErrors-->Logout
+  --> PermanentContactDetails --> NomineeDetails -->FamilyParticularsForm--> DetailsOfBankAccount -->SubmitFormAndExportErrors-->Logout
  */
 public class InitialisePO{
 	final static Logger logger = Logger.getLogger(InitialisePO.class);
 	
 	/**
-	 * run pagg object..
+	 * run page object..
 	 * @param object
 	 * @throws Exception
 	 */
@@ -36,13 +36,8 @@ public class InitialisePO{
 			logger.info(object.getClass());
 			Method method=object.getClass().getMethod("process");
 			if(method.getReturnType().equals(Void.TYPE)){
-				//no more POs to be called. hence logging out of application
-				
-				
+				//return type is null . no more POs to be called. hence going to the next record		
 				JOptionPane.showMessageDialog(null, "Please click save afer confirm.");
-				
-				
-		//		logout();
 				return;
 			}
 			Object poToInvoke=method.invoke(object);
@@ -55,9 +50,12 @@ public class InitialisePO{
 			{
 			JOptionPane.showMessageDialog(null, "Please click save afer confirm.");
 			}
-			
+			//check if its authentication failure
+			if(Launch.username_to_block.contains(Launch.record.getEsicUserName())){
+				logger.error("authentication failure");
+				
+			}
 			logger.error("Loading of object post call of "+object.getClass() +" has failed. Exiting out of the application");
-			throw new Exception("Failure in loading object");
 		} catch (NoSuchMethodException e){
 			e.printStackTrace();
 			logger.error("method does not exist",e);

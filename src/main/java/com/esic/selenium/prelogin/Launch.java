@@ -1,5 +1,7 @@
 package com.esic.selenium.prelogin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -24,37 +26,25 @@ public class Launch {
 	public static WebDriver driver;
 	public static String base="";
 	final static Logger logger = Logger.getLogger(Launch.class);
-	
-	
-	
+	static List<String> username_to_block=new ArrayList<String>(); //if authentication fails, disallow rest of the rows have same username to login
+	//this will stop the account from getting locked.
 	public Launch() {
 	loadDriver();
 	}
-	public static void main(String[] args) throws InterruptedException {
-		try{	
-		loadDriver();
-		//call excel file reader
-		//every row will call the process method
-		//if login fails , the username will be added to preferences
-		//for remaining rows if username matches, the row will be skipped 
-		//with reason of " please validate username and password"
-		Launch launchObject=new Launch();
-		launchObject.process();		
-		closeDriver();
-		}
-		catch(Exception e){
-		logger.error("An error has occured. Exiting the application.",e);
-		closeDriver();
-		}
-	}
-	
-	public void process() throws Exception{
+
+	public void process(){
+		try{
 		InitialisePO initPO=new InitialisePO();
-		initPO.initialisePageObject(new PreLogin());
-		/*For now the sequence is : 
-		 * Prelogin--> Login --> UserHomePage --> IPRegistration --> EmployeeRegistrationForm1 --> PersonalDetails --> PresentContactDetails
-			  --> NomineeDetails -->FamilyParticularsForm--> DetailsOfBankAccount -->SubmitFormAndExportErrors-->Logout
-		*/	 
+		if(record.getEsicUserName().equals("") || record.getEsicPassword().equals("")){
+			logger.info("Skipping record since the username/password is not present");
+		}
+		else{
+		initPO.initialisePageObject(new PreLogin()); 
+		}
+		}catch(Exception e){
+			logger.error("An error has occured. Exiting the application.",e);
+			closeDriver();
+			}
 	}
 	
 	

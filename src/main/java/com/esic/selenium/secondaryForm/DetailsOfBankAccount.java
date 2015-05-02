@@ -3,10 +3,9 @@ package com.esic.selenium.secondaryForm;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
-
 import com.esic.selenium.homePage.SubmitFormAndExportErrors;
 import com.esic.selenium.prelogin.Launch;
+import com.esic.util.DropdownUtil;
 
 /**
  * 
@@ -53,12 +52,13 @@ public class DetailsOfBankAccount {
 	public SubmitFormAndExportErrors process(){
 		detailsOfBankAccountLink.click();
 		Launch.switchToNewWindow();
-		enterDetail("12345",accountNum);
-		selectTypeOfAccount("Current"); //not working for now
-		enterDetail("abc", nameOfBank);
-		enterDetail("def", nameOfBranch);
-		enterDetail("1234", MICRCode);
-		enterDetail("5565", IFSCCode);
+		
+		enterDetail(Launch.record.getBankAccountNo(),accountNum);
+		selectTypeOfAccount(Launch.record.getBankAccountType());
+		enterDetail(Launch.record.getBankAccountBankName(), nameOfBank);
+		enterDetail(Launch.record.getBankAccountBranchName(), nameOfBranch);
+		enterDetail(Launch.record.getBankAccountMICR(), MICRCode);
+		enterDetail(Launch.record.getBankAccountIFSC(), IFSCCode);
 		
 		save.click();
 		close.click();
@@ -74,15 +74,7 @@ public class DetailsOfBankAccount {
 	
 	private void selectTypeOfAccount(String typeValue){
 		accountType.click();
-		Select dropdown = new Select(accountType);
-		dropdown.selectByVisibleText(typeValue);
-		int value=dropdown.getOptions().indexOf(typeValue);
-		try{dropdown.getAllSelectedOptions();
-		logger.info("selectRelationshipWithEmployee : "+dropdown.getAllSelectedOptions().toString());
-		}
-		catch(Exception e){
-			dropdown.selectByIndex(value);
-		}
+		DropdownUtil.selectDropdown(typeValue, accountType);
 	}
 	
 }

@@ -47,14 +47,16 @@ public class PresentContactDetails extends ContactDetails{
 		WebElement email;
 		
 
-		public NomineeDetails process(){
-			enterMandatoryAddress("abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij abcdefghij");
-			enterDetailForField("email", "abc@abc.in");
-			enterDetailForField("district", "mum");
-			enterDetailForField("state", "Kerala");
-			enterDetailForField("district", "Kollam");
-			enterDetailForField("phone", "12345");
-			return new NomineeDetails();
+		public PermanentContactDetails process(){
+			enterMandatoryAddress(Launch.record.getPresentAddress_Address());
+			enterDetailForField("email", Launch.record.getPresentAddress_emailID());
+			enterDetailForField("district", Launch.record.getPresentAddress_District());
+			enterDetailForField("state", Launch.record.getPresentAddress_State());
+			enterDetailForField("district", Launch.record.getPresentAddress_District());
+			enterDetailForField("phone", Launch.record.getPresentAddress_PhoneNo());
+			enterDetailForField("mobile", Launch.record.getPresentAddress_MobileNo());
+			enterDetailForField("pincode", Launch.record.getPresentAddress_PinCode());
+			return new PermanentContactDetails();
 		}
 		
 		protected void loadAddressValues(){
