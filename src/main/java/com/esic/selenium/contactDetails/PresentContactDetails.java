@@ -1,13 +1,13 @@
 package com.esic.selenium.contactDetails;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.selenium.prelogin.Launch;
-import com.esic.selenium.secondaryForm.NomineeDetails;
 /**
  * 
  * @author Mauli
