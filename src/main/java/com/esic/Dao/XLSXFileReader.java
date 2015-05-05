@@ -28,15 +28,14 @@ public class XLSXFileReader {
 
 	
 	public static void main(String args[]) throws IOException {
-		XLSXFileReader  reader = new XLSXFileReader();
+//		XLSXFileReader  reader = new XLSXFileReader();
 		
 
 		// C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx
 
-		String fileName = "C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx";
+//		String fileName = "C:\\Users\\meet\\git\\AutoESIC\\src\\main\\resources\\samplefile\\SampleFile.xlsx";
 	
-		
-		XSSFSheet mySheet = reader.readSheetInExcel(fileName, 0);
+		//		XSSFSheet mySheet = reader.readSheetInExcel(fileName, 0);
 
 		//reader.printExcelFile(mySheet);
 	}

@@ -1,13 +1,16 @@
 package com.esic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.esic.Dao.ESICExcelDAO;
 import com.esic.Dao.XLSXFileReader;
 import com.esic.processor.ESICProcessor;
-import com.esic.processor.ESICRecordProcessor;
 import com.esic.ui.UI;
 
 public class ObjectStore {
 
+	public static List<String> blockedUsers = new ArrayList<String>();
 
 	static UI ui;
 
@@ -15,19 +18,9 @@ public class ObjectStore {
 
 	static ESICProcessor processor;
 
-	static ESICRecordProcessor recordProcessor;
-	
 	private static String fileName;
 
 	private static final XLSXFileReader fileReader = new XLSXFileReader();
-	
-	public static ESICRecordProcessor getRecordProcessor() {
-
-		if (recordProcessor == null) {
-			recordProcessor = new ESICRecordProcessor();
-		}
-		return recordProcessor;
-	}
 
 	public static ESICExcelDAO getExcelDAO() {
 
@@ -51,7 +44,7 @@ public class ObjectStore {
 		}
 		return ui;
 	}
-	
+
 	public static String getFileName() {
 		return fileName;
 	}
@@ -64,5 +57,9 @@ public class ObjectStore {
 		return fileReader;
 	}
 
+	public static ESICProcessor getIPDetailsDownloadProcessor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -127,7 +127,7 @@ public class ESICExcelDAO {
 					// contents..
 					// seems changing cell time might loose some data about
 					// cell..
-					int celltype = c.getCellType();
+				//	int celltype = c.getCellType();
 					c.setCellType(Cell.CELL_TYPE_STRING);
 					value = c.getStringCellValue().trim();
 				//	c.setCellType(celltype);

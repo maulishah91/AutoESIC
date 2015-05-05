@@ -2,7 +2,6 @@ package com.esic.code;
 
 import com.esic.domain.ESICRecord;
 import com.esic.domain.annotations.ESICExcelColumns;
-import com.esic.domain.annotations.ESICExcelColumns;
 
 /**
  * run this class to generate methods based on each key in man for {@link ESICRecord}
