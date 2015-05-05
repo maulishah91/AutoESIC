@@ -1,15 +1,10 @@
 package com.esic.selenium.prelogin;
 
 
-import javax.swing.JOptionPane;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import com.esic.domain.ESICRecord;
-import com.esic.exception.ESICException;
 import com.esic.selenium.homePage.UserHomePage;
 /**
  * 
@@ -44,15 +39,20 @@ public class Login {
 			logger.info("Skipping record since the username/password is not present");
 			return null;
 		}
-		return login(username,password);
+		boolean sucess = login(username,password);
+		if (sucess) {
+			return checkLoginSuccess();
+		} else {
+			return null;
+		}
 	}
 	
-	public UserHomePage login(String usernameValue,String passwordValue) throws Exception{
+	public boolean login(String usernameValue,String passwordValue) throws Exception{
 		for(String block : Launch.username_to_block){
 		if(block.equalsIgnoreCase(usernameValue)){
 			logger.error("username belongs to the list of invalid user credentials. Skipping the row");
 			Launch.record.setAutoEsicComments("Skipping the row due to invalid login cerdentials");
-			return null;
+			return false;
 		}
 		}
 		userName.clear();
@@ -60,7 +60,8 @@ public class Login {
 		this.password.clear();
 		this.password.sendKeys(passwordValue);
 		loginButton.click();
-		return checkLoginSuccess();
+		
+		return true;
 	}
 	
 	private UserHomePage checkLoginSuccess(){

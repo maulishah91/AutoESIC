@@ -1,6 +1,7 @@
 package com.esic.selenium.prelogin;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -38,9 +39,11 @@ public class PreLogin {
 	
 	public Login launchLoginPage() {
 		try{
+			
+			WebDriver driver = Launch.driver;
 	    String baseUrl = "http://www.esic.in";
-	    Launch.driver.get(baseUrl);
-	    validateHomePageLink();
+	    driver.get(baseUrl);
+	    validateHomePageLink(driver);
 	    homePageElement.click();
 	    //check if certificates have been installed. check later if this step is required
 	    //launch the main login page
@@ -75,10 +78,16 @@ public class PreLogin {
 		}
 	}
 	
-	private void validateHomePageLink(){
-		String homepage=Launch.driver.getCurrentUrl();
+	private void validateHomePageLink(WebDriver driver){
+		String homepage=driver.getCurrentUrl();
 		if(homepage.equals("http://www.esic.in/ESICInsurance1/ESICInsurancePortal/PortalLogin.aspx")){
 			logger.info("Success Scenario: ESIC site is loaded");
+		}
+		else
+		{
+			Launch.driver.get(Launch.driver.getCurrentUrl());
+			validateHomePageLink(driver);
+			
 		}
 	}
 	
