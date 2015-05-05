@@ -1,13 +1,12 @@
 package com.esic.selenium.homePage;
 
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.apache.log4j.Logger;
 
 import com.esic.domain.ESICDate;
-import com.esic.domain.ESICRecord;
 import com.esic.selenium.datePicker.DateOfAppointment;
 import com.esic.selenium.prelogin.Launch;
 

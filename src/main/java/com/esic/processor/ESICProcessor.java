@@ -2,7 +2,9 @@ package com.esic.processor;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -11,9 +13,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import com.esic.ObjectStore;
 import com.esic.Dao.ESICExcelDAO;
-import com.esic.Dao.XLSXFileReader;
 import com.esic.domain.ESICRecord;
 import com.esic.exception.ESICException;
+import com.esic.selenium.downloader.InsertIPDetailsDownloadRecordProcessor;
 
 /**
  * Main backend logic class...
@@ -25,12 +27,29 @@ public class ESICProcessor {
 	final static Logger logger = Logger.getLogger(ESICProcessor.class);
 
 	
+	Map<ProcessName, ESICRecordProcessorBase> processorMap = new HashMap<ESICProcessor.ProcessName, ESICRecordProcessorBase>();
+	
+	
+	public enum ProcessName
+	{
+		ESIC_FILE_PROCESS,
+		ESIC_IP_DETAILS_DOWNLOAD
+		
+	}
 	/**
 	 * Main processor
 	 * 
 	 * @param fileName
 	 */
-	public void processFile(String fileName) {
+	
+	public ESICProcessor() {
+		processorMap.put(ProcessName.ESIC_FILE_PROCESS, new ESICRecordProcessor());
+		processorMap.put(ProcessName.ESIC_IP_DETAILS_DOWNLOAD, new InsertIPDetailsDownloadRecordProcessor());
+		
+		
+	}
+	
+	public void processFile(String fileName,ProcessName processName) {
 		List<ESICRecord> records;
 		ObjectStore.setFileName(fileName);
 		
@@ -38,10 +57,11 @@ public class ESICProcessor {
 			records = getEsicRecords(fileName);
 		//	printRecords(records);
 
-			ESICRecordProcessor recordProcessor = ObjectStore
-					.getRecordProcessor();
-			recordProcessor.processRecords(records);
 			
+			
+			ESICRecordProcessorBase recordProcessor = processorMap.get(processName);
+			recordProcessor.processRecords(records);
+			 
 			
 
 		} catch (Exception e) {

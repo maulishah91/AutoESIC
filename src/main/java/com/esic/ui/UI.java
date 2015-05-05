@@ -17,15 +17,19 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 
 import com.esic.ObjectStore;
+import com.esic.processor.ESICProcessor.ProcessName;
+import javax.swing.JLabel;
 
 public class UI {
 
 	final static Logger logger = Logger.getLogger(UI.class);
 
-	private JFrame frame;
+	public JFrame frame;
 	private JFileChooser chooser;
 	private JButton btnSelectFile;
 	private JTextField textField;
+	private JTextField fileDownloadLocation;
+	private JLabel lblDownloadLocation;
 
 	/**
 	 * Launch the application.
@@ -48,6 +52,7 @@ public class UI {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public UI() {
 		initialize();
@@ -110,20 +115,56 @@ public class UI {
 		});
 		btnProcessFile.setBounds(170, 63, 89, 23);
 		frame.getContentPane().add(btnProcessFile);
+		
+		JButton btnNewButton = new JButton("Download Insert IP Files.");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				handleDownloadFilesBatch();
+			}
+		});
+		btnNewButton.setBounds(269, 181, 185, 23);
+		frame.getContentPane().add(btnNewButton);
+		
+		fileDownloadLocation = new JTextField();
+		fileDownloadLocation.setColumns(10);
+		fileDownloadLocation.setBounds(122, 150, 332, 23);
+		frame.getContentPane().add(fileDownloadLocation);
+		
+		lblDownloadLocation = new JLabel("Download Location");
+		lblDownloadLocation.setBounds(23, 154, 95, 14);
+		frame.getContentPane().add(lblDownloadLocation);
 
 		chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"Excel Files", "xlsx");
 		chooser.setFileFilter(filter);
-
+ 
 	}
 
 	protected void handleProcessFile() {
-		ObjectStore.getProcessor().processFile(textField.getText());
+		ObjectStore.getProcessor().processFile(textField.getText(), ProcessName.ESIC_FILE_PROCESS);
+	}
+
+	protected void handleDownloadFilesBatch() {
+		
+		
+		if (fileDownloadLocation.getText() == null
+				|| fileDownloadLocation.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(frame,
+					"Please enter valid file download location");
+
+		}
+
+		ObjectStore.getProcessor().processFile(textField.getText(),ProcessName.ESIC_IP_DETAILS_DOWNLOAD);
 	}
 
 	
+	
+	
 
+	
+	
 	protected void handleSelectFileClick() {
 
 		int returnVal = chooser.showOpenDialog(frame);
@@ -135,5 +176,10 @@ public class UI {
 			
 		}
 
+	}
+	
+	
+	public String getFileDownloadLocation() {
+		return fileDownloadLocation.getText();
 	}
 }

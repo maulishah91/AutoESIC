@@ -1,21 +1,19 @@
 package com.esic.processor;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
-import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.prelogin.Launch;
+import com.esic.selenium.update.ESICRecordUpdater;
 
-public class ESICRecordProcessor {
+public class ESICRecordProcessor extends ESICRecordProcessorBase {
 
 	final static Logger logger = Logger.getLogger(ESICRecordProcessor.class);
 
 	
-	private Launch seleniumProcessor = new Launch();
+	private Launch seleniumProcessor;
 
-	
+	private ESICRecordUpdater updater = new ESICRecordUpdater();
 	
 
 	/**
@@ -27,18 +25,30 @@ public class ESICRecordProcessor {
 	 */
 	public void processRecord(ESICRecord record) {
 		logger.debug(record);
+		
+		
+		if(seleniumProcessor == null)
+		{
+			seleniumProcessor = new Launch();
+		}
+		
+		
 		Launch.record = record;
-		seleniumProcessor.process();		
+		
+		
+		if(record.getESICNo() != null && !record.getESICNo().isEmpty())
+		{
+			//update flow
+			updater.processRecord(record);
+		}
+		else
+		{
+			//add flow..
+			seleniumProcessor.process();
+		}
 		record.setAutoEsicStatus("PASSTEST");
 	}
 
-	public void processRecords(List<ESICRecord> records){
-		
-		for (ESICRecord esicRecord : records) {
-			processRecord(esicRecord);
-			ObjectStore.getExcelDAO().updateRecord(esicRecord);
-		}
 
-	}
 
 }
