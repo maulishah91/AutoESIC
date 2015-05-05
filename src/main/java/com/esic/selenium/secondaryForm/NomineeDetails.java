@@ -1,10 +1,7 @@
 package com.esic.selenium.secondaryForm;
 
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
