@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.esic.domain.Dependent;
 import com.esic.domain.ESICDate;
 import com.esic.selenium.contactDetails.ContactDetails;
@@ -162,8 +161,8 @@ public class FamilyParticularsForm extends ContactDetails{
 			if(checkboxForParentsRelation.isDisplayed() && !checkboxForParentsRelation.isSelected())
 			checkboxForParentsRelation.click();
 			else{
-				Launch.record.setAutoEsicComments("Checkbox on sleecting dependent mother/father is not displayed");
-				logger.error("Checkbox on sleecting dependent mother/father is not displayed");
+				Launch.record.setAutoEsicComments("Checkbox on selecting dependent mother/father is not displayed");
+				logger.error("Checkbox on selecting dependent mother/father is not displayed");
 				throw new CheckBoxNotDisplayedWhenFatherOrMotherIsSelected();
 			}
 			

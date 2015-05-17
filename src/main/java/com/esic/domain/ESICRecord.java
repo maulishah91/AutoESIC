@@ -19,6 +19,7 @@ public class ESICRecord extends HashMap<String, String> {
 	 * BAckreference object...( for updation purpose)
 	 */
 	private Row excelRow;
+	private String comments="";
 
 	public Row getExcelRow() {
 		return excelRow;
@@ -69,8 +70,8 @@ public class ESICRecord extends HashMap<String, String> {
 		if (cell == null) {
 			cell = this.excelRow.createCell(ESICExcelColumns.autoEsicComments.ordinal());
 		}
-			
-			cell.setCellValue(value);
+			comments+=". "+value; //concatenate all error messages
+			cell.setCellValue(comments);
 	}
 
 	public boolean isCheckBoxTrueForPermanentDetails(){
@@ -97,8 +98,8 @@ public class ESICRecord extends HashMap<String, String> {
 	public String toString() {
 		return "ESICRecord ["
 				+ (dependents != null ? "dependents=" + dependents + ", " : "")
-		//		+ (getExcelRow() != null ? "getExcelRow()=" + getExcelRow()
-			//			+ ", " : "")
+				+ (getExcelRow() != null ? "getExcelRow()=" + getExcelRow()
+						+ ", " : "")
 				+ (getDependents() != null ? "getDependents()="
 						+ getDependents() + ", " : "")
 				+ (getDateOfAppointmentESICDate() != null ? "getDateOfAppointmentESICDate()="
@@ -454,9 +455,10 @@ public class ESICRecord extends HashMap<String, String> {
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
 	 */ 
-
+	 
 	 public String getAutoEsicComments(){
-	return this.get("autoEsicComments"); }
+		 return this.get("autoEsicComments"); 	  
+	 }
 
 	/** 
 	  *    see  ESICREcordMapMethodGenerator 
