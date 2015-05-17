@@ -45,8 +45,15 @@ public class ESICRecordProcessor extends ESICRecordProcessorBase {
 		{
 			//add flow..
 			seleniumProcessor.process();
+			logger.info("Comments are: "+record.getAutoEsicComments());
+			record.setAutoEsicComments(record.getAutoEsicComments().trim());
+			if(record.getAutoEsicComments()!=null && !record.getAutoEsicComments().equals("")){
+				record.setAutoEsicStatus("FAILTEST");
+			}
+			else{
+			record.setAutoEsicStatus("PASSTEST");
+			}
 		}
-		record.setAutoEsicStatus("PASSTEST");
 	}
 
 

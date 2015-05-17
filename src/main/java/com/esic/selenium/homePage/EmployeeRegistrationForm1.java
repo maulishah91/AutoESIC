@@ -14,7 +14,8 @@ import com.esic.selenium.prelogin.Launch;
  * 
  * @author Mauli
  *
- *This class will fetch values from input file
+ *This class will fetch values from input file.
+ *Just the date of appointment 
  */
 public class EmployeeRegistrationForm1 {
 	
@@ -35,7 +36,7 @@ public class EmployeeRegistrationForm1 {
 		enterDateOfAppointment(doa);
 		
 		//NOTE: THIS PART IS LEFT UNIMPLEMENTED FOR NOW
-		SelectdispensaryOrImp("imp");
+		//SelectdispensaryOrImp("imp");
 		return new PersonalDetails();
 	}
 	

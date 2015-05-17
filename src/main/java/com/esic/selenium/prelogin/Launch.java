@@ -13,8 +13,6 @@ import com.esic.domain.ESICRecord;
 /**
  * 
  * @author Mauli
- *user story 4, 19(checkbox one) and 23 onwards are pending
- *
  *This process will load and close the drivers and call call the InitialisePO to load
  *and execute the first page object aka PreLogin
  *It will also handle scenarios related to switching and closing new windows
@@ -35,8 +33,21 @@ public class Launch {
 	public void process(){
 		try{
 		InitialisePO initPO=new InitialisePO();
-		if(record.getEsicUserName().equals("") || record.getEsicPassword().equals("")){
+		String usernameValue=Launch.record.getEsicUserName();
+		String passwordValue=record.getEsicPassword();
+		if(usernameValue==null || passwordValue==null){
 			logger.info("Skipping record since the username/password is not present");
+			Launch.record.setAutoEsicComments("Skipping record since the username/password is not present");
+		}
+		else if(usernameValue.equals("") || record.getEsicPassword().equals("")){
+			logger.info("Skipping record since the username/password is not present");
+			Launch.record.setAutoEsicComments("Skipping record since the username/password is not present");
+		}
+		// since we have already performed the null check we can use string operations
+		//ToLowerCase because while adding elements to blocklist we are storing it in lowercase
+		else if(Launch.username_to_block.contains(usernameValue.toLowerCase())){
+			logger.error("username "+usernameValue+" belongs to the list of invalid user credentials. Skipping the row");
+			Launch.record.setAutoEsicComments("Skipping the row due to invalid login credentials");
 		}
 		else{
 		initPO.initialisePageObject(new PreLogin()); 

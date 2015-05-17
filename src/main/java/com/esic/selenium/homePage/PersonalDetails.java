@@ -73,7 +73,11 @@ public class PersonalDetails {
 		//1: husband
 		if(selector==0)fatherRadioButton.click();
 		else if(selector==1) husbandRadioButton.click();
-		else {logger.error("wrong input in exce"); return;}
+		else {
+			logger.error("Wrong input entered for father/husband radio button"); 
+			Launch.record.setAutoEsicComments("Wrong input entered for father/husband radio button");
+			return;
+			}
 		husbandOrfatherName.clear();
 		husbandOrfatherName.sendKeys(name.trim());
 		logger.info("selected is "+selector);
@@ -113,6 +117,7 @@ public class PersonalDetails {
 		}
 		else{
 			logger.error("Incorrect option provided for gender");
+			Launch.record.setAutoEsicComments("Incorrect option provided for gender");
 		}
 	}
 	
