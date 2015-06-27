@@ -4,7 +4,6 @@ package com.esic.selenium.secondaryForm;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 

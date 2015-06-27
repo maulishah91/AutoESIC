@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 
 /**
@@ -43,7 +44,7 @@ public class UserHomePage {
 	
 	
 	public IPRegistration process(){
-		Launch.base= Launch.driver.getWindowHandle(); //home page of application is the base URL
+		Launch.base= ESICFireFoxWebDriver.getInstance().getWindowHandle(); //home page of application is the base URL
 		return closePopupForSession();
 	}
 	public IPRegistration closePopupForSession() throws ClosePopupException{
@@ -52,7 +53,7 @@ public class UserHomePage {
 		closePopup.click();
 		validatePopup2(popupIPText.getText());
 		closeIPPopup.click();
-		return PageFactory.initElements(Launch.driver,IPRegistration.class);
+		return PageFactory.initElements(ESICFireFoxWebDriver.getInstance(),IPRegistration.class);
 	}
 	
 	public void logout()throws LogoutError{
@@ -60,7 +61,7 @@ public class UserHomePage {
 		logoutButton.click();
 		buttonOK.click();
 		String URLpostLogout="http://www.esic.in/ESICInsurance1/EsicInsurancePortal/PortalLogin.aspx";
-		if(Launch.driver.getCurrentUrl().contains(URLpostLogout)){
+		if(ESICFireFoxWebDriver.getInstance().getCurrentUrl().contains(URLpostLogout)){
 			logger.info("Successfully logged out of the application. Closing browser.");
 		}
 		else logger.error("Error in logging out of the application. Closing browser");

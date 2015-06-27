@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 /**
  * 
  * @author Mauli
@@ -40,7 +42,7 @@ public class PreLogin {
 	public Login launchLoginPage() {
 		try{
 			
-			WebDriver driver = Launch.driver;
+			WebDriver driver = ESICFireFoxWebDriver.getInstance();
 	    String baseUrl = "http://www.esic.in";
 	    driver.get(baseUrl);
 	    validateHomePageLink(driver);
@@ -53,7 +55,7 @@ public class PreLogin {
 	    checkForUntrustedConnectionError();
 	    logger.info("Launching Login page.");
 	    validateLoginPageLink();
-	    return PageFactory.initElements(Launch.driver,Login.class);
+	    return PageFactory.initElements(ESICFireFoxWebDriver.getInstance(),Login.class);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -85,7 +87,7 @@ public class PreLogin {
 		}
 		else
 		{
-			Launch.driver.get(Launch.driver.getCurrentUrl());
+			ESICFireFoxWebDriver.getInstance().get(ESICFireFoxWebDriver.getInstance().getCurrentUrl());
 			validateHomePageLink(driver);
 			
 		}
@@ -93,7 +95,7 @@ public class PreLogin {
 	
 	private void validateLoginPageLink(){	
 		String loginLink="https://www.esic.in/ESICInsurance1/ESICInsurancePortal/Portal_Login.aspx";
-		if(Launch.driver.getCurrentUrl().contains(loginLink)){
+		if(ESICFireFoxWebDriver.getInstance().getCurrentUrl().contains(loginLink)){
 			logger.info("Success Scenario: Login page link is verified");
 		}
 		

@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.domain.ESICRecord;
-import com.esic.selenium.prelogin.Launch;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 /**
  * 
  * @author Mauli
@@ -69,7 +69,7 @@ public class PresentContactDetails extends ContactDetails{
 		
 		protected void loadDistrict(){
 			//dynamically loaded after state is selected and hence has to called after state is selected
-			district=Launch.driver.findElement(By.id("ctl00_HomePageContent_ctrlTextPresentDistrict"));
+			district=ESICFireFoxWebDriver.getInstance().findElement(By.id("ctl00_HomePageContent_ctrlTextPresentDistrict"));
 		}
 		
 		public void enterDetailForField(String fieldName,String fieldValue){

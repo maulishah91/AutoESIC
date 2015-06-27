@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 
 /**
@@ -40,7 +41,7 @@ public class IPRegistration {
 		//switch to new window 
 		boolean switchSuccess=Launch.switchToNewWindow();
 		String registerIPURL="http://www.esic.in/InsuranceGlobalWebV4/Employee/RegisteredEmployees.aspx";
-		if(switchSuccess && Launch.driver.getCurrentUrl().contains(registerIPURL)){			
+		if(switchSuccess && ESICFireFoxWebDriver.getInstance().getCurrentUrl().contains(registerIPURL)){			
 			return goToRegistrationForm();
 		}	
 		else return null;
@@ -53,7 +54,7 @@ public class IPRegistration {
 		selectNoRadioButton.click();
 		continueButton.click();
 		//go to EmployeeRegistrationForm1
-		return PageFactory.initElements(Launch.driver, EmployeeRegistrationForm1.class);
+		return PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), EmployeeRegistrationForm1.class);
 	}
 	
 	class RegisterNewIPPageLoadError extends RuntimeException{

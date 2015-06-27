@@ -11,7 +11,7 @@ import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.contactDetails.PresentContactDetails;
 import com.esic.selenium.datePicker.DateOfBirth;
-import com.esic.selenium.prelogin.Launch;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.util.DropdownUtil;
 
 public class PersonalDetails {
@@ -91,7 +91,7 @@ public class PersonalDetails {
 	public void enterDateOfBirth(ESICDate dob){
 		//perform date validation and fetch dd, mm and yyyy
 		dateOfBirth.click(); //this will lead to creation of datepicker element in dom
-		DateOfBirth pickDate=PageFactory.initElements(Launch.driver, DateOfBirth.class);
+		DateOfBirth pickDate=PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), DateOfBirth.class);
 		//to do: perform validation that the values entered are valid
 		pickDate.selectDateOnDatePicker(dob);
 		

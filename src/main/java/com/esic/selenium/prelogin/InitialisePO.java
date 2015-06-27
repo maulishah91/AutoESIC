@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.homePage.UserHomePage;
 
 /**
@@ -34,7 +35,7 @@ public class InitialisePO{
 	 */
 	public void initialisePageObject(Object object,ESICRecord record) throws Exception{		
 		try {
-			object=PageFactory.initElements(Launch.driver, object.getClass());
+			object=PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), object.getClass());
 			logger.info(object.getClass());
 			Method method=object.getClass().getMethod("process");
 			if(method.getReturnType().equals(Void.TYPE)){
@@ -76,7 +77,7 @@ public class InitialisePO{
 
 	public static void logout(){
 		Launch.closeCurrentWindowAndSwitchToBaseWindow();
-		UserHomePage homePage=PageFactory.initElements(Launch.driver, UserHomePage.class);
+		UserHomePage homePage=PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), UserHomePage.class);
 		homePage.logout();
 	}
 }

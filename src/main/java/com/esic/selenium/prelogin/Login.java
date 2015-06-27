@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.homePage.UserHomePage;
 /**
  * 
@@ -54,7 +55,7 @@ public class Login {
 	
 	private UserHomePage checkLoginSuccess(ESICRecord record){
 		try{
-			if(Launch.driver.getCurrentUrl().contains("www.esic.in/InsuranceGlobalWebV4/ESICInsurancePortal/PortalHome.aspx")){
+			if(ESICFireFoxWebDriver.getInstance().getCurrentUrl().contains("www.esic.in/InsuranceGlobalWebV4/ESICInsurancePortal/PortalHome.aspx")){
 			logger.info("Login success.");	
 			//go to next PageObject
 			return new UserHomePage();

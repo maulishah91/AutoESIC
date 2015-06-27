@@ -1,16 +1,13 @@
 package com.esic.selenium.prelogin;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.util.ESICRecordUtil;
 /**
  * 
@@ -27,7 +24,7 @@ public class Launch {
 	private static final String SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT = "Skipping record since the username/password is not present";
 	
 	//private static ESICRecord record;
-	public static WebDriver driver;
+//	public static WebDriver driver;
 	public static String base="";
 	final static Logger logger = Logger.getLogger(Launch.class);
 	
@@ -78,14 +75,8 @@ public class Launch {
 	public static void loadDriver(){
 		
 		//short return if driver already present.
-		if (driver != null) {
-			return;
-		}
-		
-		
 		try{
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		WebDriver driver = ESICFireFoxWebDriver.getInstance();
 		}
 		catch(Exception e){
 			logger.error("Error in creating Firefox Driver");
@@ -107,12 +98,12 @@ public class Launch {
 				return false;
 			}
 			logger.info("base window handle: "+base);
-		    Set <String> set = Launch.driver.getWindowHandles();
+		    Set <String> set = ESICFireFoxWebDriver.getInstance().getWindowHandles();
 		    logger.info("set of window handles: "+set.toString());
 		    set.remove(base);
 		    if(set.size()>=1){
-		    Launch.driver.switchTo().window((String) set.toArray()[set.size()-1]);
-		    logger.info("url: "+Launch.driver.getCurrentUrl());
+		    ESICFireFoxWebDriver.getInstance().switchTo().window((String) set.toArray()[set.size()-1]);
+		    logger.info("url: "+ESICFireFoxWebDriver.getInstance().getCurrentUrl());
 		    return true;
 		    }
 		return false;
@@ -120,8 +111,8 @@ public class Launch {
 	
 	public static void closeCurrentWindowAndSwitchToBaseWindow() throws ErrorInClosingNewWindow{
 		//closing second window and going back to base window
-		driver.close(); //closing second window and switching to base window
-		driver.switchTo().window(base);
+		ESICFireFoxWebDriver.getInstance().close(); //closing second window and switching to base window
+		ESICFireFoxWebDriver.getInstance().switchTo().window(base);
 	}
 	
 	class ErrorInClosingNewWindow extends RuntimeException{

@@ -13,6 +13,7 @@ import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.contactDetails.ContactDetails;
 import com.esic.selenium.datePicker.FamilyMemberDateOfBirth;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.util.DropdownUtil;
 
@@ -102,7 +103,7 @@ public class FamilyParticularsForm extends ContactDetails{
 	void checkTheNumberOfDependentsAdded(ESICRecord record){
 		//number of dependents
 		int number=0;
-		List<WebElement> numberOfDependents=Launch.driver.findElements(By.xpath("//table[@id='ctl00_HomePageContent_GridviewIssue']//tr")); 
+		List<WebElement> numberOfDependents=ESICFireFoxWebDriver.getInstance().findElements(By.xpath("//table[@id='ctl00_HomePageContent_GridviewIssue']//tr")); 
 		if(numberOfDependents.size()>1){
 			number=numberOfDependents.size()-1; ////since first tr is a header
 			logger.info("number of dependents added: "+number); 
@@ -141,7 +142,7 @@ public class FamilyParticularsForm extends ContactDetails{
 	public void enterDateOfBirth(ESICDate BirthDate){
 		//perform date validation and fetch dd, mm and yyyy
 		dateOfBirth.click(); ////this will lead to creation of datepicker element in dom
-		FamilyMemberDateOfBirth pickDate=PageFactory.initElements(Launch.driver, FamilyMemberDateOfBirth.class);
+		FamilyMemberDateOfBirth pickDate=PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), FamilyMemberDateOfBirth.class);
 		pickDate.selectDateOnDatePicker(BirthDate);
 		
 	}
@@ -185,7 +186,7 @@ public class FamilyParticularsForm extends ContactDetails{
 	@Override
 	protected void loadDistrict() {
 		//dynamically loaded after state is selected and hence has to called after state is selected
-		district=Launch.driver.findElement(By.id("ctl00_HomePageContent_ctrlTextPermanentDistrict"));
+		district=ESICFireFoxWebDriver.getInstance().findElement(By.id("ctl00_HomePageContent_ctrlTextPermanentDistrict"));
 	}
 	
 	class CheckBoxNotDisplayedWhenFatherOrMotherIsSelected extends RuntimeException{

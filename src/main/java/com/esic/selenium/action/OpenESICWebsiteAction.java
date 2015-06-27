@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
 import com.esic.exception.ESICSystemException;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.pom.PreLoginPOM;
 import com.esic.selenium.prelogin.Launch;
 
@@ -61,7 +62,7 @@ public class OpenESICWebsiteAction  implements Action{
 			if (confirm == JOptionPane.NO_OPTION) {
 				throw new ESICSystemException("ESIC Site not loading", null);
 			}
-			Launch.driver.get(Launch.driver.getCurrentUrl());
+			ESICFireFoxWebDriver.getInstance().get(ESICFireFoxWebDriver.getInstance().getCurrentUrl());
 			validateHomePageLink(driver);
 
 		}

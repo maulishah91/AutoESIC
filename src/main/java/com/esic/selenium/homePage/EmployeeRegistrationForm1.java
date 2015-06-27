@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.datePicker.DateOfAppointment;
-import com.esic.selenium.prelogin.Launch;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 
 /**
  * 
@@ -55,7 +55,7 @@ public class EmployeeRegistrationForm1 {
 	public void enterDateOfAppointment(ESICDate doa){
 		//perform date validation and fetch dd, mm and yyyy
 		dateOfAppointment.click(); ////this will lead to creation of datepicker element in dom
-		DateOfAppointment pickDate=PageFactory.initElements(Launch.driver, DateOfAppointment.class);
+		DateOfAppointment pickDate=PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), DateOfAppointment.class);
 		pickDate.selectDateOnDatePicker(""+doa.getYear(),doa.getMonth(),""+doa.getDate());
 		
 	}

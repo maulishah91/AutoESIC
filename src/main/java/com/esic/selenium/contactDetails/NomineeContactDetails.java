@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.selenium.secondaryForm.FamilyParticularsForm;
 
@@ -179,7 +180,7 @@ public class NomineeContactDetails extends ContactDetails{
 	
 	protected void loadDistrict(){
 		//dynamically loaded after state is selected and hence has to called after state is selected
-		district=Launch.driver.findElement(By.id("ctl00_HomePageContent_Districts"));
+		district=ESICFireFoxWebDriver.getInstance().findElement(By.id("ctl00_HomePageContent_Districts"));
 	}
 	
 	public void enterDetailForField(String fieldName,String fieldValue){
