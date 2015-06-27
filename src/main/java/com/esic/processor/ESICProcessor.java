@@ -15,7 +15,7 @@ import com.esic.ObjectStore;
 import com.esic.Dao.ESICExcelDAO;
 import com.esic.domain.ESICRecord;
 import com.esic.exception.ESICException;
-import com.esic.selenium.downloader.InsertIPDetailsDownloadRecordProcessor;
+import com.esic.selenium.processor.downloader.InsertIPDetailsDownloadRecordProcessor;
 
 /**
  * Main backend logic class...

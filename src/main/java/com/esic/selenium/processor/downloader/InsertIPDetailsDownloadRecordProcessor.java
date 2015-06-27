@@ -1,4 +1,4 @@
-package com.esic.selenium.downloader;
+package com.esic.selenium.processor.downloader;
 
 import javax.swing.JOptionPane;
 

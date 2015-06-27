@@ -1,4 +1,4 @@
-package com.esic.selenium.update;
+package com.esic.selenium.processor.update;
 
 import org.apache.log4j.Logger;
 
