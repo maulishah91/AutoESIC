@@ -33,9 +33,6 @@ public class ESICRecordProcessor extends ESICRecordProcessorBase {
 		}
 		
 		
-		Launch.record = record;
-		
-		
 		if(record.getESICNo() != null && !record.getESICNo().isEmpty())
 		{
 			//update flow
@@ -44,7 +41,7 @@ public class ESICRecordProcessor extends ESICRecordProcessorBase {
 		else
 		{
 			//add flow..
-			seleniumProcessor.process();
+			seleniumProcessor.process(record);
 			logger.info("Comments are: "+record.getAutoEsicComments());
 			record.setAutoEsicComments(record.getAutoEsicComments().trim());
 			if(record.getAutoEsicComments()!=null && !record.getAutoEsicComments().equals("")){

@@ -14,6 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.selenium.secondaryForm.FamilyParticularsForm;
 
@@ -96,11 +97,11 @@ public class NomineeContactDetails extends ContactDetails{
 		@FindBy(id="ctl00_HomePageContent_revAadhaar")
 		WebElement aadharCardError;
 		
-	public FamilyParticularsForm process(){
-		enterMandatoryAddress(Launch.record.getNomineeAddress());
-		enterDetailForField("state", Launch.record.getNomineeState());
-		enterDetailForField("district",Launch.record.getNomineeDistrict());
-		enterDetailForField("phone",Launch.record.getNomineePhoneNo());
+	public FamilyParticularsForm process(ESICRecord record){
+		enterMandatoryAddress(record.getNomineeAddress());
+		enterDetailForField("state", record.getNomineeState());
+		enterDetailForField("district",record.getNomineeDistrict());
+		enterDetailForField("phone",record.getNomineePhoneNo());
 		//on clicking save check if pop up comes
 		saveBtn.click();
 		checkForErrors();

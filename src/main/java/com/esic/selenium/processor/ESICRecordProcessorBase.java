@@ -16,6 +16,7 @@ public abstract class ESICRecordProcessorBase {
 	public void processRecords(List<ESICRecord> records){
 		
 		for (ESICRecord esicRecord : records) {
+			
 			processRecord(esicRecord);
 			ObjectStore.getExcelDAO().updateRecord(esicRecord);
 		}

@@ -48,9 +48,9 @@ public class PersonalDetails {
 	WebElement femaleRadioButton;
 	
 		
-	public PresentContactDetails process(){
+	public PresentContactDetails process(ESICRecord record1){
 		
-		ESICRecord record = Launch.record;
+		ESICRecord record = record1;
 		enterEmpName(record.getEmployeeName());
 		selectMartialStatus(record.getMatitalStatus());
 		

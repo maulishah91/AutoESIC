@@ -8,6 +8,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.contactDetails.NomineeContactDetails;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.util.DropdownUtil;
@@ -44,14 +45,14 @@ public class NomineeDetails {
 	@FindBy(id="ctl00_HomePageContent_txtAadhaarID")
 	WebElement aadharID;
 	
-	public NomineeContactDetails process(){
+	public NomineeContactDetails process(ESICRecord record){
 		findNomineeDetails();
-		enterName(Launch.record.getNomineeName());
-		selectRelationshipWithIP(Launch.record.getNomineeRelationship());
-		boolean isFamilyMem=isNomineeAFamilyMember(Launch.record.getIsnomineeAFamilyMember());
+		enterName(record.getNomineeName());
+		selectRelationshipWithIP(record.getNomineeRelationship());
+		boolean isFamilyMem=isNomineeAFamilyMember(record.getIsnomineeAFamilyMember());
 		if(!isFamilyMem){
 			//aadhar card details:
-			enterAadharID(Launch.record.getNomineeAadharID());
+			enterAadharID(record.getNomineeAadharID());
 			
 		}
 		return new NomineeContactDetails();

@@ -4,6 +4,9 @@ package com.esic.selenium.prelogin;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import com.esic.ObjectStore;
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.homePage.UserHomePage;
 /**
  * 
@@ -33,23 +36,23 @@ public class Login {
 	@FindBy(id="lblMessage")
 	WebElement authFailMessage;
 	
-	public UserHomePage process() throws Exception{
+	public UserHomePage process(ESICRecord record) throws Exception{
 		//from excel sheet
-		String username=Launch.record.getEsicUserName();
-		String password=Launch.record.getEsicPassword();
-		return login(username,password);
+		String username=record.getEsicUserName();
+		String password=record.getEsicPassword();
+		return login(username,password, record);
 	}
 	
-	public UserHomePage login(String usernameValue,String passwordValue) throws Exception{
+	public UserHomePage login(String usernameValue,String passwordValue, ESICRecord record) throws Exception{
 		userName.clear();
 		userName.sendKeys(usernameValue);
 		this.password.clear();
 		this.password.sendKeys(passwordValue);
 		loginButton.click();
-		return checkLoginSuccess();
+		return checkLoginSuccess(record);
 	}
 	
-	private UserHomePage checkLoginSuccess(){
+	private UserHomePage checkLoginSuccess(ESICRecord record){
 		try{
 			if(Launch.driver.getCurrentUrl().contains("www.esic.in/InsuranceGlobalWebV4/ESICInsurancePortal/PortalHome.aspx")){
 			logger.info("Login success.");	
@@ -57,18 +60,18 @@ public class Login {
 			return new UserHomePage();
 			}
 			//login has failed.. record the username to avoid further use
-			Launch.username_to_block.add(Launch.record.getEsicUserName().toLowerCase());
-			Launch.record.setAutoEsicComments("Skipping the row due to invalid login credentials");
+			ObjectStore.blockedUsers.add(record.getEsicUserName().toLowerCase());
+			record.setAutoEsicComments("Skipping the row due to invalid login credentials");
 			return null;
 		}
 		catch(Exception e){
 			logger.error("Login Failed");
 			//login has failed.. record the username to avoid further use
-			Launch.username_to_block.add(Launch.record.getEsicUserName().toLowerCase());
+			ObjectStore.blockedUsers.add(record.getEsicUserName().toLowerCase());
 			if(authFailMessage!=null && authFailMessage.getText().contains("Authentication failure.")){
 				logger.error("Invalid username/password");
 			}
-			Launch.record.setAutoEsicComments("Skipping the row due to invalid login credentials");
+			record.setAutoEsicComments("Skipping the row due to invalid login credentials");
 			return null;
 		}
 	}

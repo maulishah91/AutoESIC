@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.esic.domain.ESICDate;
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.datePicker.DateOfAppointment;
 import com.esic.selenium.prelogin.Launch;
 
@@ -31,8 +32,8 @@ public class EmployeeRegistrationForm1 {
 	@FindBy(id="ctl00_HomePageContent_ctrlDIDateOfAppointmentDy")
 	WebElement dateOfAppointment;
 	
-	public PersonalDetails process(){
-		ESICDate doa = Launch.record.getDateOfAppointmentESICDate();
+	public PersonalDetails process(ESICRecord record){
+		ESICDate doa = record.getDateOfAppointmentESICDate();
 		enterDateOfAppointment(doa);
 		
 		//NOTE: THIS PART IS LEFT UNIMPLEMENTED FOR NOW

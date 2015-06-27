@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.ObjectStore;
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.homePage.UserHomePage;
 
 /**
@@ -30,7 +32,7 @@ public class InitialisePO{
 	 * @param object
 	 * @throws Exception
 	 */
-	public void initialisePageObject(Object object) throws Exception{		
+	public void initialisePageObject(Object object,ESICRecord record) throws Exception{		
 		try {
 			object=PageFactory.initElements(Launch.driver, object.getClass());
 			logger.info(object.getClass());
@@ -43,7 +45,7 @@ public class InitialisePO{
 			Object poToInvoke=method.invoke(object);
 			if(poToInvoke!=null){
 				logger.info("Next PO to execute: "+poToInvoke.getClass());
-				initialisePageObject(poToInvoke);
+				initialisePageObject(poToInvoke, record);
 				return;
 			}
 			else
@@ -51,7 +53,7 @@ public class InitialisePO{
 			JOptionPane.showMessageDialog(null, "Please click save afer confirm.");
 			}
 			//check if its authentication failure
-			if(Launch.username_to_block.contains(Launch.record.getEsicUserName())){
+			if(ObjectStore.blockedUsers.contains(record.getEsicUserName())){
 				logger.error("authentication failure");
 				
 			}

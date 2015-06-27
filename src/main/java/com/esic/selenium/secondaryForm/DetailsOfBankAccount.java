@@ -3,6 +3,8 @@ package com.esic.selenium.secondaryForm;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.homePage.SubmitFormAndExportErrors;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.util.DropdownUtil;
@@ -49,16 +51,16 @@ public class DetailsOfBankAccount {
 	@FindBy(id="ctl00_HomePageContent_close_btn")
 	WebElement close;
 	
-	public SubmitFormAndExportErrors process(){
+	public SubmitFormAndExportErrors process(ESICRecord record){
 		detailsOfBankAccountLink.click();
 		Launch.switchToNewWindow();
 		
-		enterDetail(Launch.record.getBankAccountNo(),accountNum);
-		selectTypeOfAccount(Launch.record.getBankAccountType());
-		enterDetail(Launch.record.getBankAccountBankName(), nameOfBank);
-		enterDetail(Launch.record.getBankAccountBranchName(), nameOfBranch);
-		enterDetail(Launch.record.getBankAccountMICR(), MICRCode);
-		enterDetail(Launch.record.getBankAccountIFSC(), IFSCCode);
+		enterDetail(record.getBankAccountNo(),accountNum);
+		selectTypeOfAccount(record.getBankAccountType());
+		enterDetail(record.getBankAccountBankName(), nameOfBank);
+		enterDetail(record.getBankAccountBranchName(), nameOfBranch);
+		enterDetail(record.getBankAccountMICR(), MICRCode);
+		enterDetail(record.getBankAccountIFSC(), IFSCCode);
 		
 		save.click();
 		close.click();

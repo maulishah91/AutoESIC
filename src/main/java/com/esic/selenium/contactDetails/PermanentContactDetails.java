@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.selenium.secondaryForm.NomineeDetails;
 
@@ -52,20 +53,20 @@ public class PermanentContactDetails extends ContactDetails{
 	@FindBy(id="ctl00_HomePageContent_ctrlTextPermanentEmail")
 	WebElement email;
 	
-	public NomineeDetails process(){
+	public NomineeDetails process(ESICRecord record){
 		//check if box is ticked, if not then enter details below
-		if(Launch.record.isCheckBoxTrueForPermanentDetails()){
+		if(record.isCheckBoxTrueForPermanentDetails()){
 			copyPresentAddressDetails.click();
 		}
 		else{
-		enterMandatoryAddress(Launch.record.getPresentAddress_Address());
-		enterDetailForField("email", Launch.record.getPermanntAddress_emailID());
-		enterDetailForField("district", Launch.record.getPermanntAddress_District());
-		enterDetailForField("state", Launch.record.getPermanntAddress_State());
-		enterDetailForField("district", Launch.record.getPermanntAddress_District());
-		enterDetailForField("phone", Launch.record.getPermanntAddress_PhoneNo());
-		enterDetailForField("mobile", Launch.record.getPermanntAddress_MobileNo());
-		enterDetailForField("pincode", Launch.record.getPermanntAddress_PinCode());
+		enterMandatoryAddress(record.getPresentAddress_Address());
+		enterDetailForField("email", record.getPermanntAddress_emailID());
+		enterDetailForField("district", record.getPermanntAddress_District());
+		enterDetailForField("state", record.getPermanntAddress_State());
+		enterDetailForField("district", record.getPermanntAddress_District());
+		enterDetailForField("phone", record.getPermanntAddress_PhoneNo());
+		enterDetailForField("mobile", record.getPermanntAddress_MobileNo());
+		enterDetailForField("pincode", record.getPermanntAddress_PinCode());
 		}
 		return new NomineeDetails();
 	}

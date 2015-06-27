@@ -9,7 +9,9 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
+import com.esic.util.ESICRecordUtil;
 /**
  * 
  * @author Mauli
@@ -20,38 +22,52 @@ import com.esic.domain.ESICRecord;
 public class Launch {
 
 	
-	public static ESICRecord record;
+	private static final String SKIPPING_THE_ROW_DUE_TO_INVALID_LOGIN_CREDENTIALS = "Skipping the row due to invalid login credentials";
+
+	private static final String SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT = "Skipping record since the username/password is not present";
+	
+	//private static ESICRecord record;
 	public static WebDriver driver;
 	public static String base="";
 	final static Logger logger = Logger.getLogger(Launch.class);
-	static List<String> username_to_block=new ArrayList<String>(); //if authentication fails, disallow rest of the rows have same username to login
+	
 	//this will stop the account from getting locked.
 	public Launch() {
 	loadDriver();
 	}
 
-	public void process(){
+	/**
+	 * process current record.
+	 * @param record 
+	 */
+	public void process(ESICRecord record){
 		try{
 		InitialisePO initPO=new InitialisePO();
-		String usernameValue=Launch.record.getEsicUserName();
+		String usernameValue=record.getEsicUserName();
 		String passwordValue=record.getEsicPassword();
-		if(usernameValue==null || passwordValue==null){
-			logger.info("Skipping record since the username/password is not present");
-			Launch.record.setAutoEsicComments("Skipping record since the username/password is not present");
+		
+		if(!ESICRecordUtil.isLoginDetailPresent(record))
+		{
+			logger.info(SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT);
+			record.setAutoEsicComments(SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT);
+			//TODO set status to failed.
+			//shortcut return as we dont need to do anything else for this record.
+			return;
 		}
-		else if(usernameValue.equals("") || record.getEsicPassword().equals("")){
-			logger.info("Skipping record since the username/password is not present");
-			Launch.record.setAutoEsicComments("Skipping record since the username/password is not present");
-		}
+		
 		// since we have already performed the null check we can use string operations
 		//ToLowerCase because while adding elements to blocklist we are storing it in lowercase
-		else if(Launch.username_to_block.contains(usernameValue.toLowerCase())){
+		 if(ObjectStore.blockedUsers.contains(usernameValue.toLowerCase())){
 			logger.error("username "+usernameValue+" belongs to the list of invalid user credentials. Skipping the row");
-			Launch.record.setAutoEsicComments("Skipping the row due to invalid login credentials");
+			record.setAutoEsicComments(SKIPPING_THE_ROW_DUE_TO_INVALID_LOGIN_CREDENTIALS);
+			//TODO set status to failed.
+			//shortcut return as we dont need to do anything else for this record.
+			return;
 		}
-		else{
-		initPO.initialisePageObject(new PreLogin()); 
-		}
+		 
+		
+		initPO.initialisePageObject(new PreLogin(), record); 
+		
 		}catch(Exception e){
 			logger.error("An error has occured. Exiting the application.",e);
 			closeDriver();

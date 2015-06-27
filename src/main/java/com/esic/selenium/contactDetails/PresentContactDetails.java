@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.prelogin.Launch;
 /**
  * 
@@ -47,15 +48,15 @@ public class PresentContactDetails extends ContactDetails{
 		WebElement email;
 		
 
-		public PermanentContactDetails process(){
-			enterMandatoryAddress(Launch.record.getPresentAddress_Address());
-			enterDetailForField("email", Launch.record.getPresentAddress_emailID());
-			enterDetailForField("district", Launch.record.getPresentAddress_District());
-			enterDetailForField("state", Launch.record.getPresentAddress_State());
-			enterDetailForField("district", Launch.record.getPresentAddress_District());
-			enterDetailForField("phone", Launch.record.getPresentAddress_PhoneNo());
-			enterDetailForField("mobile", Launch.record.getPresentAddress_MobileNo());
-			enterDetailForField("pincode", Launch.record.getPresentAddress_PinCode());
+		public PermanentContactDetails process(ESICRecord record){
+			enterMandatoryAddress(record.getPresentAddress_Address());
+			enterDetailForField("email", record.getPresentAddress_emailID());
+			enterDetailForField("district", record.getPresentAddress_District());
+			enterDetailForField("state", record.getPresentAddress_State());
+			enterDetailForField("district", record.getPresentAddress_District());
+			enterDetailForField("phone", record.getPresentAddress_PhoneNo());
+			enterDetailForField("mobile", record.getPresentAddress_MobileNo());
+			enterDetailForField("pincode", record.getPresentAddress_PinCode());
 			return new PermanentContactDetails();
 		}
 		

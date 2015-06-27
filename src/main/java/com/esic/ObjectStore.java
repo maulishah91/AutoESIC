@@ -12,6 +12,9 @@ public class ObjectStore {
 
 	public static List<String> blockedUsers = new ArrayList<String>();
 
+	static List<String> username_to_block=new ArrayList<String>(); //if authentication fails, disallow rest of the rows have same username to login
+	
+	
 	static UI ui;
 
 	static ESICExcelDAO excelDAO;

@@ -7,8 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import com.esic.domain.Dependent;
 import com.esic.domain.ESICDate;
+import com.esic.domain.ESICRecord;
 import com.esic.selenium.contactDetails.ContactDetails;
 import com.esic.selenium.datePicker.FamilyMemberDateOfBirth;
 import com.esic.selenium.prelogin.Launch;
@@ -67,10 +69,10 @@ public class FamilyParticularsForm extends ContactDetails{
 	@FindBy(name="close_btn")
 	WebElement close;
 	
-	public DetailsOfBankAccount process(){
+	public DetailsOfBankAccount process(ESICRecord record){
 		switchToFamilyParticularsWindow();
 		//get list of dependents:
-		List<Dependent> dependentIterator=Launch.record.getDependents();
+		List<Dependent> dependentIterator=record.getDependents();
 		boolean firstRecord=true;
 		for(Dependent dependent : dependentIterator){
 			if(!firstRecord){
@@ -88,24 +90,24 @@ public class FamilyParticularsForm extends ContactDetails{
 				enterDetailForField("district",dependent.getTown());
 				enterDetailForField("aadharCard", dependent.getAadharID());
 			}
-			submitDetails(dependent.getRelationship());
+			submitDetails(dependent.getRelationship(), record);
 		}
-		checkTheNumberOfDependentsAdded();
+		checkTheNumberOfDependentsAdded(record);
 		close.click();
 		Launch.switchToNewWindow();
 		return new DetailsOfBankAccount();
 		
 	}
 	
-	void checkTheNumberOfDependentsAdded(){
+	void checkTheNumberOfDependentsAdded(ESICRecord record){
 		//number of dependents
 		int number=0;
 		List<WebElement> numberOfDependents=Launch.driver.findElements(By.xpath("//table[@id='ctl00_HomePageContent_GridviewIssue']//tr")); 
 		if(numberOfDependents.size()>1){
 			number=numberOfDependents.size()-1; ////since first tr is a header
 			logger.info("number of dependents added: "+number); 
-			if(number!=Launch.record.getDependents().size()){
-				Launch.record.setAutoEsicComments("Dependents were not added correctly. Please verify the validity of values");
+			if(number!=record.getDependents().size()){
+				record.setAutoEsicComments("Dependents were not added correctly. Please verify the validity of values");
 				logger.error("Dependents were not added correctly. Please verify the validity of values");
 				throw new ErrorInAddingDependents();
 			}
@@ -155,13 +157,13 @@ public class FamilyParticularsForm extends ContactDetails{
 		}
 	}
 	
-	private void submitDetails(String relationshipValue){
+	private void submitDetails(String relationshipValue, ESICRecord record){
 		if(relationshipValue.equalsIgnoreCase("Dependant father") || relationshipValue.equalsIgnoreCase("Dependant mother") ){
 			submit.click();
 			if(checkboxForParentsRelation.isDisplayed() && !checkboxForParentsRelation.isSelected())
 			checkboxForParentsRelation.click();
 			else{
-				Launch.record.setAutoEsicComments("Checkbox on selecting dependent mother/father is not displayed");
+				record.setAutoEsicComments("Checkbox on selecting dependent mother/father is not displayed");
 				logger.error("Checkbox on selecting dependent mother/father is not displayed");
 				throw new CheckBoxNotDisplayedWhenFatherOrMotherIsSelected();
 			}
