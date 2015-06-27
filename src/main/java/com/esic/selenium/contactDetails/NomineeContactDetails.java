@@ -1,11 +1,18 @@
 package com.esic.selenium.contactDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.esic.selenium.prelogin.Launch;
 import com.esic.selenium.secondaryForm.FamilyParticularsForm;
@@ -54,17 +61,79 @@ public class NomineeContactDetails extends ContactDetails{
 	
 	@FindBy(id="ctl00_HomePageContent_btnClose")
 	WebElement closeBtn;
+	
+	//error fields:
+		@FindBy(id="ctl00_HomePageContent_RequiredFieldValidator1")
+		WebElement nameError;
+		
+		@FindBy(id="ctl00_HomePageContent_RequiredFieldValidator3")
+		WebElement addressError;
+		
+		@FindBy(id="ctl00_HomePageContent_RequiredFieldValidator5")
+		WebElement relationshipError;
+		
+		@FindBy(id="ctl00_HomePageContent_RequiredFieldValidatorState")
+		WebElement stateError;
+		
+		@FindBy(id="ctl00_HomePageContent_DistrictsRequiredFieldVal")
+		WebElement districtError;
+		
+		@FindBy(id="ctl00_HomePageContent_Address1RegularExpressionVal")
+		WebElement addressError2;
+		
+		@FindBy(id="ctl00_HomePageContent_Address2RegularExpressionVal")
+		WebElement addressLine2Error;
+		
+		@FindBy(id="ctl00_HomePageContent_Address3RegularExpressionVal")
+		WebElement addressLine3Error;
+		
+		@FindBy(id="ctl00_HomePageContent_RegularExpressionValidator3")
+		WebElement pincodeError;
+		
+		@FindBy(id="ctl00_HomePageContent_RegularExpressionValidator6")
+		WebElement mobileError;
+		
+		@FindBy(id="ctl00_HomePageContent_revAadhaar")
+		WebElement aadharCardError;
 		
 	public FamilyParticularsForm process(){
 		enterMandatoryAddress(Launch.record.getNomineeAddress());
-		enterDetailForField("district", Launch.record.getNomineeDistrict());
 		enterDetailForField("state", Launch.record.getNomineeState());
 		enterDetailForField("district",Launch.record.getNomineeDistrict());
 		enterDetailForField("phone",Launch.record.getNomineePhoneNo());
+		//on clicking save check if pop up comes
 		saveBtn.click();
+		checkForErrors();
 		closeBtn.click();
 		Launch.switchToNewWindow(); // this will get us back to the main form
 		return new FamilyParticularsForm();
+	}
+	
+	public boolean checkForErrors(){
+		List<WebElement> errorList=new ArrayList<WebElement>(Arrays.asList(
+				nameError,
+				addressError,
+				relationshipError,
+				stateError,
+				districtError,
+				addressError2,
+				addressLine2Error,
+				addressLine3Error,
+				pincodeError,
+				mobileError,
+				aadharCardError
+				));
+		
+		for(WebElement el: errorList){
+			if(el.isDisplayed()==true) {
+				logger.error("Error displayed in the nominee window. Please correct it before proceeding");
+				JOptionPane.showMessageDialog (null, "Error displayed in the nominee window. Please correct it before proceeding.", "Error Message", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Click on save in the nominee window. Then click on OK");
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 			//overriding base class method since lengths of address lines are different

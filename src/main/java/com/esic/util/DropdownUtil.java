@@ -1,5 +1,7 @@
 package com.esic.util;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
@@ -16,8 +18,25 @@ public class DropdownUtil {
 		if(value.trim().equals("")){
 			return false;
 		}
-        Select dropDown = new Select(element);
 
+        Select dropDown = new Select(element);
+        boolean isPresent=false;
+        //check if element is present before selecting it
+        //this is done to simply reduce time in selecting options using arrow key which takes time
+        List<WebElement> options = dropDown.getOptions();
+        for (WebElement option : options) {
+        	if(option.getText().trim().equalsIgnoreCase(value)){
+            isPresent=true;
+            break;
+        	}
+        }
+        
+        if(!isPresent){
+        	logger.error("Value "+value+" not found in the dropdown");
+            JOptionPane.showMessageDialog (null, "Value "+value+" not found in dropdown. Please select the correct value before submitting.", "Value not found", JOptionPane.ERROR_MESSAGE);
+        	return false;
+        }
+        
         String currentValue;
         String previousValue = null;
         while (true) {

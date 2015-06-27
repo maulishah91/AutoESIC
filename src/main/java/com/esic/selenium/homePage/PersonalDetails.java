@@ -1,5 +1,7 @@
 package com.esic.selenium.homePage;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,7 +77,8 @@ public class PersonalDetails {
 		else if(selector==1) husbandRadioButton.click();
 		else {
 			logger.error("Wrong input entered for father/husband radio button"); 
-			Launch.record.setAutoEsicComments("Wrong input entered for father/husband radio button");
+			//Launch.record.setAutoEsicComments("Wrong input entered for father/husband radio button");
+			JOptionPane.showMessageDialog (null, "Please select correct value for father/husband before clicking okay", "Wrong value", JOptionPane.ERROR_MESSAGE);
 			return;
 			}
 		husbandOrfatherName.clear();
@@ -117,7 +120,9 @@ public class PersonalDetails {
 		}
 		else{
 			logger.error("Incorrect option provided for gender");
-			Launch.record.setAutoEsicComments("Incorrect option provided for gender");
+			//Launch.record.setAutoEsicComments("Incorrect option provided for gender");
+			JOptionPane.showMessageDialog (null, "Please select correct option for gender before clicking okay", "Wrong value", JOptionPane.ERROR_MESSAGE);
+			
 		}
 	}
 	

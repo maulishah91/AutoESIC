@@ -1,7 +1,10 @@
 package com.esic.selenium.secondaryForm;
 
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -68,8 +71,14 @@ public class NomineeDetails {
 	}
 
 	private void enterAadharID(String value) {
+		if(!value.contains("^[0-9]+$")){
+			logger.error("Aadhar card value: "+value+" in excel file is incorrect. Please enter the valid value before proceeding");
+			JOptionPane.showMessageDialog (null, "Aadhar card value: "+value+" in excel file is incorrect. Please enter the valid value before proceeding", "Value incorrect", JOptionPane.ERROR_MESSAGE);
+		}
+		else{
 		aadharID.clear();
 		aadharID.sendKeys(value);
+		}
 	}
 	
 	
