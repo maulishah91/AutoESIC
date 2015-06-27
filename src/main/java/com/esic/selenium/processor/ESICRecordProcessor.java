@@ -1,4 +1,4 @@
-package com.esic.processor;
+package com.esic.selenium.processor;
 
 import org.apache.log4j.Logger;
 

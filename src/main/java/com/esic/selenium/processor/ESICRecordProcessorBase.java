@@ -1,4 +1,4 @@
-package com.esic.processor;
+package com.esic.selenium.processor;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

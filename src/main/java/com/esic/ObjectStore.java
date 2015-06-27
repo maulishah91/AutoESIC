@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.esic.Dao.ESICExcelDAO;
 import com.esic.Dao.XLSXFileReader;
-import com.esic.processor.ESICProcessor;
+import com.esic.selenium.processor.ESICProcessor;
 import com.esic.ui.UI;
 
 public class ObjectStore {

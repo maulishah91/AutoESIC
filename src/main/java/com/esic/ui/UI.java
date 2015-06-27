@@ -17,7 +17,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 
 import com.esic.ObjectStore;
-import com.esic.processor.ESICProcessor.ProcessName;
+import com.esic.selenium.processor.ESICProcessor.ProcessName;
+
 import javax.swing.JLabel;
 
 public class UI {
