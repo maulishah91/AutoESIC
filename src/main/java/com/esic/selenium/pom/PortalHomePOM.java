@@ -13,4 +13,6 @@ public class PortalHomePOM {
 
 	@FindBy(id = "lnkInsertIPDetails")
 	public WebElement insertIPDetails;
+	
+	
 }

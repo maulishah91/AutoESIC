@@ -8,13 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 /**
  * 
  * @author Mauli
  *
  */
-public class PresentContactDetails extends ContactDetails{
+public class PresentContactDetails extends ContactDetails implements PageObject{
 
 	final static Logger logger = Logger.getLogger(PresentContactDetails.class);
 	

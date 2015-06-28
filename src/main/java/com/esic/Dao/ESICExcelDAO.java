@@ -167,7 +167,7 @@ public class ESICExcelDAO {
 			logger.error(message, null);
 			throw new ESICException(message, null);
 		} else {
-			logger.debug("updating " + fileName + "-OP.xlsx  ->" + "for" +record);
+			logger.debug("updating " + fileName + "-OP.xlsx  ->" + "for" +record.getExcelRow().getRowNum());
 			ObjectStore.getFilereader().updateExcelFile(fileName + "-OP.xlsx",
 					workbook);
 		}

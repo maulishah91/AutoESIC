@@ -9,12 +9,13 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.contactDetails.PresentContactDetails;
 import com.esic.selenium.datePicker.DateOfBirth;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.util.DropdownUtil;
 
-public class PersonalDetails {
+public class PersonalDetails implements PageObject{
 
 	final static Logger logger = Logger.getLogger(PersonalDetails.class);
 			

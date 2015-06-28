@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.datePicker.DateOfAppointment;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 
@@ -18,7 +19,7 @@ import com.esic.selenium.driver.ESICFireFoxWebDriver;
  *This class will fetch values from input file.
  *Just the date of appointment 
  */
-public class EmployeeRegistrationForm1 {
+public class EmployeeRegistrationForm1  implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(EmployeeRegistrationForm1.class);
 	

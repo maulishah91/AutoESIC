@@ -1,9 +1,10 @@
-package com.esic.selenium.action;
+package com.esic.selenium.action.downloademployerdetails;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.Action;
 import com.esic.selenium.pom.PortalHomePOM;
 
 public class OpenLinkInserIPDetailsAction implements Action {

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.contactDetails.NomineeContactDetails;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.util.DropdownUtil;
@@ -16,7 +17,7 @@ import com.esic.util.DropdownUtil;
  * @author Mauli
  * till user story 25: a lot of code can be reused
  */
-public class NomineeDetails {
+public class NomineeDetails  implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(NomineeDetails.class);
 

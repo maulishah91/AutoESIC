@@ -30,15 +30,15 @@ public class ESICRecordUtil {
 		//sanity check also.
 		if (record.getEsicUserName() == null
 				|| record.getEsicUserName().trim().isEmpty()) {
-			return true;
+			return false;
 		}
 
 		if (record.getEsicPassword() == null
 				|| record.getEsicPassword().trim().isEmpty()) {
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 		
 	}
 }

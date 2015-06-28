@@ -42,6 +42,7 @@ public class OpenESICWebsiteAction  implements Action{
 		// https://www.esic.in/ESICInsurance1/ESICInsurancePortal/Portal_Login.aspx
 
 		checkForUntrustedConnectionError(driver, preLoginPage);
+		
 		validateLoginPageLink(driver);
 
 	}

@@ -35,8 +35,6 @@ public class ESICRecordUpdater extends ESICRecordProcessorBase {
 		updateIPAction.perform(driver, record);
 		
 		
-		driver.getWindowHandles();
-		
 		
 		driver.switchToWindowWithTitle("ViewAllRegisteredEmployeesPage");
 		
@@ -44,7 +42,11 @@ public class ESICRecordUpdater extends ESICRecordProcessorBase {
 		SearchAndOpenRegisteredESICAction searchAndOpenRegisteredESICAction = new SearchAndOpenRegisteredESICAction();
 		searchAndOpenRegisteredESICAction.perform(driver, record);
 		
+
 		
+
+		
+
 
 	}
 

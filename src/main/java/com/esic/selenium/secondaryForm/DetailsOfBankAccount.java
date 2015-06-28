@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.homePage.SubmitFormAndExportErrors;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.util.DropdownUtil;
@@ -18,7 +19,7 @@ import com.esic.util.DropdownUtil;
  *
  *not mandatory
  */
-public class DetailsOfBankAccount {
+public class DetailsOfBankAccount  implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(DetailsOfBankAccount.class);
 

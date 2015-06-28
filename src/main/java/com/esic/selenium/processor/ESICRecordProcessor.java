@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.prelogin.Launch;
+import com.esic.selenium.processor.addrecrod.InsertESICRecordProcessor;
 import com.esic.selenium.processor.update.ESICRecordUpdater;
 
 public class ESICRecordProcessor extends ESICRecordProcessorBase {
@@ -11,9 +12,11 @@ public class ESICRecordProcessor extends ESICRecordProcessorBase {
 	final static Logger logger = Logger.getLogger(ESICRecordProcessor.class);
 
 	
-	private Launch seleniumProcessor;
+	private Launch launchInstance;
 
 	private ESICRecordUpdater updater = new ESICRecordUpdater();
+	
+	private InsertESICRecordProcessor insertProcessor = new InsertESICRecordProcessor();
 	
 
 	/**
@@ -24,12 +27,12 @@ public class ESICRecordProcessor extends ESICRecordProcessorBase {
 	 * @throws Exception 
 	 */
 	public void processRecord(ESICRecord record) {
-		logger.debug(record);
+		logger.trace(record);
 		
 		
-		if(seleniumProcessor == null)
+		if(launchInstance == null)
 		{
-			seleniumProcessor = new Launch();
+			launchInstance = new Launch();
 		}
 		
 		
@@ -41,7 +44,8 @@ public class ESICRecordProcessor extends ESICRecordProcessorBase {
 		else
 		{
 			//add flow..
-			seleniumProcessor.process(record);
+			//launchInstance.process(record);
+			insertProcessor.processRecord(record);
 			logger.info("Comments are: "+record.getAutoEsicComments());
 			record.setAutoEsicComments(record.getAutoEsicComments().trim());
 			if(record.getAutoEsicComments()!=null && !record.getAutoEsicComments().equals("")){

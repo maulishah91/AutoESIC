@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 
@@ -13,7 +15,7 @@ import com.esic.selenium.prelogin.Launch;
  * @author Mauli
  *
  */
-public class IPRegistration {
+public class IPRegistration  implements PageObject{
 
 	final static Logger logger = Logger.getLogger(IPRegistration.class);
 	
@@ -29,7 +31,7 @@ public class IPRegistration {
 	@FindBy(id="ctl00_HomePageContent_btnContinue")
 	WebElement continueButton;
 	
-	public EmployeeRegistrationForm1 process(){
+	public EmployeeRegistrationForm1 process(ESICRecord record){
 		return openRegisterNewIP();
 	}
 	

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.secondaryForm.NomineeDetails;
 
@@ -16,7 +17,7 @@ import com.esic.selenium.secondaryForm.NomineeDetails;
  * @author Mauli
  *
  */
-public class PermanentContactDetails extends ContactDetails{
+public class PermanentContactDetails extends ContactDetails implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(PermanentContactDetails.class);
 	

@@ -6,13 +6,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.OpenESICWebsiteAction;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 /**
  * 
  * @author Mauli
  *
  */
-public class PreLogin {
+public class PreLogin implements PageObject {
 	
 	final static Logger logger = Logger
 			.getLogger(PreLogin.class);
@@ -35,27 +38,20 @@ public class PreLogin {
 	@FindBy(id="exceptionDialogButton")
 	WebElement addException;
 	
-	public Login process(){
-		return launchLoginPage();
+	public Login process(ESICRecord record){
+		return launchLoginPage(record);
 	}
 	
-	public Login launchLoginPage() {
+	public Login launchLoginPage(ESICRecord record) {
 		try{
 			
 			WebDriver driver = ESICFireFoxWebDriver.getInstance();
-	    String baseUrl = "http://www.esic.in";
-	    driver.get(baseUrl);
-	    validateHomePageLink(driver);
-	    homePageElement.click();
-	    //check if certificates have been installed. check later if this step is required
-	    //launch the main login page
-	    skipCertificateInstall.click();
-	    //check if connection untrusted page appears:
-	    //link: https://www.esic.in/ESICInsurance1/ESICInsurancePortal/Portal_Login.aspx
-	    checkForUntrustedConnectionError();
-	    logger.info("Launching Login page.");
-	    validateLoginPageLink();
-	    return PageFactory.initElements(ESICFireFoxWebDriver.getInstance(),Login.class);
+	
+			
+			OpenESICWebsiteAction action = new OpenESICWebsiteAction();
+			action.perform(driver, record);
+			
+			return PageFactory.initElements(ESICFireFoxWebDriver.getInstance(),Login.class);
 		}
 		catch(Exception e){
 			e.printStackTrace();

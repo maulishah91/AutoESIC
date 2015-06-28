@@ -5,10 +5,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
-import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
-import com.esic.util.ESICRecordUtil;
 /**
  * 
  * @author Mauli
@@ -19,10 +17,7 @@ import com.esic.util.ESICRecordUtil;
 public class Launch {
 
 	
-	private static final String SKIPPING_THE_ROW_DUE_TO_INVALID_LOGIN_CREDENTIALS = "Skipping the row due to invalid login credentials";
 
-	private static final String SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT = "Skipping record since the username/password is not present";
-	
 	//private static ESICRecord record;
 //	public static WebDriver driver;
 	public static String base="";
@@ -39,31 +34,10 @@ public class Launch {
 	 */
 	public void process(ESICRecord record){
 		try{
-		InitialisePO initPO=new InitialisePO();
-		String usernameValue=record.getEsicUserName();
-		String passwordValue=record.getEsicPassword();
+		InitialisePO iterativeProcessor=new InitialisePO();
 		
-		if(!ESICRecordUtil.isLoginDetailPresent(record))
-		{
-			logger.info(SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT);
-			record.setAutoEsicComments(SKIPPING_RECORD_SINCE_THE_USERNAME_PASSWORD_IS_NOT_PRESENT);
-			//TODO set status to failed.
-			//shortcut return as we dont need to do anything else for this record.
-			return;
-		}
 		
-		// since we have already performed the null check we can use string operations
-		//ToLowerCase because while adding elements to blocklist we are storing it in lowercase
-		 if(ObjectStore.blockedUsers.contains(usernameValue.toLowerCase())){
-			logger.error("username "+usernameValue+" belongs to the list of invalid user credentials. Skipping the row");
-			record.setAutoEsicComments(SKIPPING_THE_ROW_DUE_TO_INVALID_LOGIN_CREDENTIALS);
-			//TODO set status to failed.
-			//shortcut return as we dont need to do anything else for this record.
-			return;
-		}
-		 
-		
-		initPO.initialisePageObject(new PreLogin(), record); 
+		iterativeProcessor.initialisePageObject(new PreLogin(), record); 
 		
 		}catch(Exception e){
 			logger.error("An error has occured. Exiting the application.",e);

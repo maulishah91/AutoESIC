@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.homePage.UserHomePage;
 
@@ -33,22 +34,29 @@ public class InitialisePO{
 	 * @param object
 	 * @throws Exception
 	 */
-	public void initialisePageObject(Object object,ESICRecord record) throws Exception{		
+	public void initialisePageObject(PageObject object,ESICRecord record) throws Exception{		
 		try {
 			object=PageFactory.initElements(ESICFireFoxWebDriver.getInstance(), object.getClass());
 			logger.info(object.getClass());
-			Method method=object.getClass().getMethod("process");
-			if(method.getReturnType().equals(Void.TYPE)){
+			
+			
+				if(object.getClass().toString().contains("LastPO")){
 				//return type is null . no more POs to be called. hence going to the next record		
 				JOptionPane.showMessageDialog(null, "Please click save afer confirm.");
 				return;
 			}
-			Object poToInvoke=method.invoke(object);
+		
+				PageObject poToInvoke =	object.process(record);
+				
+				
+			
 			if(poToInvoke!=null){
 				logger.info("Next PO to execute: "+poToInvoke.getClass());
 				initialisePageObject(poToInvoke, record);
 				return;
 			}
+			
+			
 			else
 			{
 			JOptionPane.showMessageDialog(null, "Please click save afer confirm.");

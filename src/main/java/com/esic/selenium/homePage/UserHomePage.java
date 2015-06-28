@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 
@@ -14,7 +16,7 @@ import com.esic.selenium.prelogin.Launch;
  *
  *closing the two popups and logging out
  */
-public class UserHomePage {
+public class UserHomePage implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(UserHomePage.class);
 	
@@ -43,7 +45,7 @@ public class UserHomePage {
 	WebElement buttonOK;
 	
 	
-	public IPRegistration process(){
+	public IPRegistration process(ESICRecord record){
 		Launch.base= ESICFireFoxWebDriver.getInstance().getWindowHandle(); //home page of application is the base URL
 		return closePopupForSession();
 	}

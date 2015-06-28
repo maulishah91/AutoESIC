@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.esic.domain.Dependent;
 import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.contactDetails.ContactDetails;
 import com.esic.selenium.datePicker.FamilyMemberDateOfBirth;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
@@ -25,7 +26,7 @@ import com.esic.util.DropdownUtil;
  *Considers dependent's information
  *
  */
-public class FamilyParticularsForm extends ContactDetails{
+public class FamilyParticularsForm extends ContactDetails implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(FamilyParticularsForm.class);
 

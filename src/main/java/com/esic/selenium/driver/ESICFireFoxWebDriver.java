@@ -11,6 +11,8 @@ import com.esic.exception.ESICWebException;
 
 public class ESICFireFoxWebDriver extends FirefoxDriver {
 
+	public static ESICFireFoxWebDriver instance;
+
 	protected ESICFireFoxWebDriver(FirefoxProfile profile) {
 		super(profile);
 	}
@@ -31,13 +33,17 @@ public class ESICFireFoxWebDriver extends FirefoxDriver {
 		}
 
 		if (!found) {
-			throw new ESICWebException("can not file window", null);
+			throw new ESICWebException("can not find window", null);
 		}
 
 	}
 
 	public static ESICFireFoxWebDriver getInstance() {
 
+		if(instance!=null){
+			return instance;
+		}
+			
 		String downloadLocation = ObjectStore.getUI().getFileDownloadLocation();
 
 		FirefoxProfile firefoxProfile = new FirefoxProfile();
@@ -54,8 +60,7 @@ public class ESICFireFoxWebDriver extends FirefoxDriver {
 		firefoxProfile.setPreference("plugin.scan.Acrobat", "99.0");
 		firefoxProfile.setPreference("plugin.scan.plid.all", false);
 
-		WebDriver driver = new FirefoxDriver(firefoxProfile);
-
+		
 		
 		
 
@@ -78,9 +83,8 @@ public class ESICFireFoxWebDriver extends FirefoxDriver {
 				false);
 		firefoxProfile.setPreference("pdfjs.disabled", true);
 
-
-		return new ESICFireFoxWebDriver(firefoxProfile);
+		instance = new ESICFireFoxWebDriver(firefoxProfile);
+		return  instance;
 
 	}
-
 }

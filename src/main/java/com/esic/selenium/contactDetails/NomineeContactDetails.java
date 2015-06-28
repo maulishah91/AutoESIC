@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.prelogin.Launch;
 import com.esic.selenium.secondaryForm.FamilyParticularsForm;
@@ -25,7 +26,7 @@ import com.esic.selenium.secondaryForm.FamilyParticularsForm;
  *
  *For nominee dialog box, providing the contact details
  */
-public class NomineeContactDetails extends ContactDetails{
+public class NomineeContactDetails extends ContactDetails implements PageObject{
 
 	final static Logger logger = Logger.getLogger(NomineeContactDetails.class);
 	

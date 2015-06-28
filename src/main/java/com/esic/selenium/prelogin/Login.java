@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.esic.ObjectStore;
 import com.esic.domain.ESICRecord;
+import com.esic.selenium.action.PageObject;
 import com.esic.selenium.driver.ESICFireFoxWebDriver;
 import com.esic.selenium.homePage.UserHomePage;
 /**
@@ -17,7 +18,7 @@ import com.esic.selenium.homePage.UserHomePage;
  * Application(UI) needs to be restarted after changing the credentials for login to be verified again
  *
  */
-public class Login {
+public class Login implements PageObject{
 	
 	final static Logger logger = Logger.getLogger(Login.class);
 
@@ -37,14 +38,14 @@ public class Login {
 	@FindBy(id="lblMessage")
 	WebElement authFailMessage;
 	
-	public UserHomePage process(ESICRecord record) throws Exception{
+	public UserHomePage process(ESICRecord record){
 		//from excel sheet
 		String username=record.getEsicUserName();
 		String password=record.getEsicPassword();
 		return login(username,password, record);
 	}
 	
-	public UserHomePage login(String usernameValue,String passwordValue, ESICRecord record) throws Exception{
+	public UserHomePage login(String usernameValue,String passwordValue, ESICRecord record) {
 		userName.clear();
 		userName.sendKeys(usernameValue);
 		this.password.clear();
