@@ -59,6 +59,9 @@ public class FillFormRegisterNewIPAction implements Action {
 		FillFamilyPerticularsFormAction familyPerticularsAction = new FillFamilyPerticularsFormAction();
 		familyPerticularsAction.perform(driver, record);
 		
+		FillFormBankDetailsAction bankDetails = new FillFormBankDetailsAction();
+		
+		bankDetails.perform(driver, record);
 		
 		
 	}

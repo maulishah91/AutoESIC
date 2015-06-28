@@ -25,7 +25,7 @@ public class ESICFireFoxWebDriver extends FirefoxDriver {
 		for (String handler : handlerSet) {
 
 			switchTo().window(handler);
-			if (this.getTitle().equals(title)) {
+			if (this.getTitle().trim().equals(title.trim())) {
 				found = true;
 				break;
 			}

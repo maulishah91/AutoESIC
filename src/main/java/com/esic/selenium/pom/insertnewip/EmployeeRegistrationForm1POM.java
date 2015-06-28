@@ -53,7 +53,9 @@ public class EmployeeRegistrationForm1POM {
 	public WebElement familyParticularsLink;
 	
 	
+	@FindBy(xpath="//td[contains(.,'Details of Bank Accounts of Insured Person:')]/following-sibling::td/a")
+	public WebElement bankAccountLink; 
 	
-	
+
 
 }

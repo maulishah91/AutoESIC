@@ -33,6 +33,7 @@ public class FillFamilyPerticularsFormAction extends ContactDetailsAbstractActio
 		
 		baseForm.familyParticularsLink.click();
 		
+		String baseFormHandle = driver.getWindowHandle();
 		((ESICFireFoxWebDriver) driver).switchToWindowWithTitle("FamilyDetails");
 		
 		FamilyPerticularsFormPOM form = PageFactory.initElements(driver, FamilyPerticularsFormPOM.class);
@@ -51,13 +52,7 @@ public class FillFamilyPerticularsFormAction extends ContactDetailsAbstractActio
 		for(Dependent dependent : dependentIterator){
 			
 			currentNumberOfRecords = getNumberOfDependentsPresentOnUI(driver);
-			
-			if(!firstRecord){
-				form.add.click();
-			}
-			if(firstRecord){
-				firstRecord=false;
-			}
+		
 			enterDetailForField("name", dependent.getName(),form);
 			enterDateOfBirth(dependent.getDob(),form);
 			selectRelationshipWithEmployee(dependent.getRelationship(),form);
@@ -67,15 +62,14 @@ public class FillFamilyPerticularsFormAction extends ContactDetailsAbstractActio
 				enterDetailForField("district",dependent.getTown());
 				enterDetailForField("aadharCard", dependent.getAadharID());
 			}
-			submitDetails(dependent.getRelationship(), record,form);
-			
+			submitDetailsForParennts(dependent.getRelationship(), record,form);
+			form.add.click();
 			waitForEnteredFamilyDetailToReflectOnFamilyDetailsTable(currentNumberOfRecords+1,driver);
 		}
 		checkTheNumberOfDependentsAdded(record, driver);
 		form.close.click();
-		Launch.switchToNewWindow();
-	
-		
+
+		driver.switchTo().window(baseFormHandle);
 		
 
 	}
@@ -85,7 +79,8 @@ public class FillFamilyPerticularsFormAction extends ContactDetailsAbstractActio
 		
 		while(!(getNumberOfDependentsPresentOnUI(driver)>= expectedNumberOfFamilyDetails))
 		{
-			logger.info("Snoozing for one second.");
+			
+			logger.info("Snoozing for one second. expecting rows >="+expectedNumberOfFamilyDetails);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -172,9 +167,9 @@ public class FillFamilyPerticularsFormAction extends ContactDetailsAbstractActio
 	}
 	
 	
-	private void submitDetails(String relationshipValue, ESICRecord record, FamilyPerticularsFormPOM form){
+	private void submitDetailsForParennts(String relationshipValue, ESICRecord record, FamilyPerticularsFormPOM form){
 		if(relationshipValue.equalsIgnoreCase("Dependant father") || relationshipValue.equalsIgnoreCase("Dependant mother") ){
-			form.submit.click();
+			form.add.click();
 			if(form.checkboxForParentsRelation.isDisplayed() && !form.checkboxForParentsRelation.isSelected())
 				form.checkboxForParentsRelation.click();
 			else{
@@ -183,7 +178,8 @@ public class FillFamilyPerticularsFormAction extends ContactDetailsAbstractActio
 				throw new ESICException("CheckBoxNotDisplayedWhenFatherOrMotherIsSelected", null);
 			}
 			
-			form.submit.click();
+			
+			
 		}
 		//check if any errors are displayed
 		loadErrorWebElement();
