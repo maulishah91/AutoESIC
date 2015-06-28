@@ -29,11 +29,21 @@ public class OpenRegisterNewIPFormAction implements Action {
 
 		form.selectNoRadioButton.click();
 		driver.switchTo().alert().accept();
+		
+		//TODO: remove this hack of sleep.
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		form = PageFactory.initElements(driver,
 				RegisterNewIP1POM.class);
 		
+		
 		form.continueButton.click();
-
+		
 		driver.switchTo().alert().accept();
 		
 	}

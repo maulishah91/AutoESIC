@@ -1,4 +1,4 @@
-package com.esic.selenium.contactDetails;
+package com.esic.selenium.action.contact;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ import com.esic.util.DropdownUtil;
  * @author Mauli
  *Made this class since these details are repeated twice
  */
-public abstract class ContactDetails {
+public abstract class ContactDetailsAbstractAction {
 
-	final static Logger logger = Logger.getLogger(ContactDetails.class);
+	final static Logger logger = Logger.getLogger(ContactDetailsAbstractAction.class);
 	protected List<WebElement> mandatoryAddress;
-	protected WebElement district;
+	
 	protected boolean isStateEntered=false;
 	
 	//permanent address : mandatory
@@ -44,7 +44,7 @@ public abstract class ContactDetails {
 		}
 		
 		//district: mandatory
-		protected void selectDistrict(String districtName){
+		protected void selectDistrict(String districtName, WebElement district){
 			if(isStateEntered){
 				loadDistrict();
 				district.click();

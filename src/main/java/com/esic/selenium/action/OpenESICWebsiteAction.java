@@ -63,7 +63,7 @@ public class OpenESICWebsiteAction  implements Action{
 			if (confirm == JOptionPane.NO_OPTION) {
 				throw new ESICSystemException("ESIC Site not loading", null);
 			}
-			ESICFireFoxWebDriver.getInstance().get(ESICFireFoxWebDriver.getInstance().getCurrentUrl());
+			driver.get(ESICFireFoxWebDriver.getInstance().getCurrentUrl());
 			validateHomePageLink(driver);
 
 		}

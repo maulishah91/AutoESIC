@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.esic.domain.ESICRecord;
 import com.esic.selenium.prelogin.Launch;
-import com.esic.selenium.processor.addrecrod.InsertESICRecordProcessor;
+import com.esic.selenium.processor.insertnewip.InsertESICRecordProcessor;
 import com.esic.selenium.processor.update.ESICRecordUpdater;
 
 public class ESICRecordProcessor extends ESICRecordProcessorBase {

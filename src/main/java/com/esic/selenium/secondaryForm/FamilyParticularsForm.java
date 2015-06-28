@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.esic.domain.Dependent;
 import com.esic.domain.ESICDate;
 import com.esic.domain.ESICRecord;
+import com.esic.exception.ESICException;
 import com.esic.selenium.action.PageObject;
 import com.esic.selenium.contactDetails.ContactDetails;
 import com.esic.selenium.datePicker.FamilyMemberDateOfBirth;
@@ -111,12 +112,12 @@ public class FamilyParticularsForm extends ContactDetails implements PageObject{
 			if(number!=record.getDependents().size()){
 				record.setAutoEsicComments("Dependents were not added correctly. Please verify the validity of values");
 				logger.error("Dependents were not added correctly. Please verify the validity of values");
-				throw new ErrorInAddingDependents();
+				throw new ESICException("Dependents were not added correctly. Please verify the validity of values", null);
 			}
 		}
 		else{
 			logger.error("No dependents were added");
-			throw new ErrorInAddingDependents();
+			throw new ESICException("No dependents were added",null);
 		}
 	}
 
@@ -199,12 +200,5 @@ public class FamilyParticularsForm extends ContactDetails implements PageObject{
 		
 	}
 	
-	class ErrorInAddingDependents extends RuntimeException{
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		
-	}
 }
