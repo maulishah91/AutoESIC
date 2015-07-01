@@ -2,7 +2,6 @@ package com.esic.selenium.driver;
 
 import java.util.Set;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 

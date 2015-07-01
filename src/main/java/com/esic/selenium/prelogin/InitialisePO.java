@@ -1,7 +1,6 @@
 package com.esic.selenium.prelogin;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import javax.swing.JOptionPane;
 
